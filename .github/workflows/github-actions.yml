@@ -1,27 +1,14 @@
 name: GitHub Actions
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on:
-  push:
+on: [push]
 jobs:
- Explore-GitHub-Actions:
+ init:
   runs-on: ubuntu-latest
   strategy:
    matrix: node-version:[ '16.x', '18.x', '20.x']
   steps:
-   - name: Use Node.js ${{ matrix.node-version }}
-     uses: actions/setup-node@v3
-     with:
-      node-version: ${{ matrix.node-version }}
-  - name: Check out repository code
+   - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+   - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+   - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+   - name: Check out repository code
      uses: actions/checkout@v4
-  - name: Install dependencies
-     run: npm install
-  - name: Run dev
-    run: npm run dev
-  - name: Run build
-    run: npm run build
-  - name: Run start
-    run: npm run start
-  - name: Run lint
-    run: npm run lint
-   
