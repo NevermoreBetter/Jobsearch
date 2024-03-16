@@ -1,29 +1,56 @@
-name: GitHub Actions
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+name: Next.js CI/CD
+
+on:
+ push:
+  branches: [main]
+ pull_request:
+  branches: [main]
+
 jobs:
- init:
+ build:
   runs-on: ubuntu-latest
+
+  strategy:
+   matrix:
+    node-version: [14.x, 16.x]
+
   steps:
+   - uses: actions/checkout@v3
    - name: Use Node.js ${{ matrix.node-version }}
      uses: actions/setup-node@v3
      with:
       node-version: ${{ matrix.node-version }}
 
-   - name: Check out repository code
-     uses: actions/checkout@v4
-
    - name: Install dependencies
-     run: npm install
+     run: npm ci
 
-   - name: Run dev
-     run: npm run dev
-
-   - name: Run build
+   - name: Build
      run: npm run build
 
-   - name: Run start
-     run: npm run start
+   - name: Run tests
+     run: npm test
 
-   - name: Run lint
+   - name: Lint
      run: npm run lint
+
+ deploy:
+  needs: build
+  runs-on: ubuntu-latest
+
+  steps:
+   - uses: actions/checkout@v3
+   - name: Use Node.js 16.x
+     uses: actions/setup-node@v3
+     with:
+      node-version: "16.x"
+
+   - name: Install dependencies
+     run: npm ci
+
+   - name: Build
+     run: npm run build
+
+   - name: Deploy to Vercel
+     env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+     run: npx vercel --prod --token=$VERCEL_TOKEN
