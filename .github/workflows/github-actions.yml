@@ -4,8 +4,6 @@ on: [push]
 jobs:
  Explore-GitHub-Actions:
   runs-on: ubuntu-latest
-  strategy:
-   matrix: node-version:[ '16.x', '18.x', '20.x']
   steps:
    - name: Use Node.js ${{ matrix.node-version }}
      uses: actions/setup-node@v3
