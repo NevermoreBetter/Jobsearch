@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     authorId: user.id,
    },
   });
-  return NextResponse.json(createResume, { status: 200 });
+  return NextResponse.json(createResume, { status: 201 });
  } catch (error) {
   return NextResponse.json(
    { message: "Something went wrong" },
