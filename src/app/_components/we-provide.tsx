@@ -43,13 +43,13 @@ const WeProvide = () => {
   });
  });
 
- const addToLeftRefs = (el) => {
+ const addToLeftRefs = (el: HTMLLIElement) => {
   if (el && !liElLeft.current.includes(el)) {
    liElLeft.current.push(el);
   }
  };
 
- const addToRigthRefs = (el) => {
+ const addToRigthRefs = (el: HTMLLIElement) => {
   if (el && !liElRight.current.includes(el)) {
    liElRight.current.push(el);
   }
