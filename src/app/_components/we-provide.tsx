@@ -19,7 +19,7 @@ const WeProvide = () => {
     scrollTrigger: {
      trigger: liElement,
      start: "0px bottom",
-     end: "bottom +=400px bottom",
+     end: "+=200px",
      scrub: true,
     },
     left: "-200px",
@@ -33,7 +33,7 @@ const WeProvide = () => {
     scrollTrigger: {
      trigger: liElement,
      start: "0px bottom",
-     end: "bottom +=400px bottom",
+     end: "+=200px",
      scrub: true,
     },
     right: "-200px",

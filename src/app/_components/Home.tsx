@@ -5,6 +5,9 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import WeProvide from "./we-provide";
+import { Button } from "@/components/ui/button";
+import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import Link from "next/link";
 
 const Home = () => {
  const paragraph = useRef<HTMLDivElement | null>(null);
@@ -73,6 +76,15 @@ const Home = () => {
       Find your dream{" "}
       <span id="change" className="underline uppercase text-rose-500"></span>
      </h1>
+     <Link href="/jobs">
+      <Button
+       size={"lg"}
+       variant={"ghost"}
+       className="flex absolute z-20 top-[70%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl font-bold text-white hover:bg-rose-700/40"
+      >
+       Get Started <ArrowBigRight />
+      </Button>
+     </Link>
     </div>
    </section>
    <section className="second w-full h-[85vh] flex flex-col items-center pt-10 gap-5 text-4xl">
