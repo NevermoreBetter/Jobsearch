@@ -25,19 +25,26 @@ export async function POST(req: Request) {
    );
   }
 
-  const { title, content } = await req.json();
+  const userData = await db.user.findFirst({ where: { externalId: user.id } });
+  console.log(userData);
+  const { type, position, experience, salary, location, description } =
+   await req.json();
 
   const createResume = await db.resume.create({
    data: {
-    title,
-    content,
-    authorId: user.id,
+    type,
+    position,
+    experience,
+    salary,
+    location,
+    description,
+    authorId: userData!.id,
    },
   });
   return NextResponse.json(createResume, { status: 201 });
  } catch (error) {
   return NextResponse.json(
-   { message: "Something went wrong" },
+   { message: "Something went wrong in api" + error.message },
    { status: 500 }
   );
  }

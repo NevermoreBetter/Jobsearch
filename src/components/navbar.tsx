@@ -14,7 +14,16 @@ const Navbar = async () => {
     <Link href="/jobs">Jobs</Link>
     <Link href="/about-us">About us</Link>
    </div>
-   {!!user ? <UserButton afterSignOutUrl="/jobs" /> : <SignInButton />}
+   {!!user ? (
+    <div className="flex items-center gap-2">
+     <UserButton afterSignOutUrl="/jobs" />
+     <Link href="/my/profile">
+      <p>Edit</p>
+     </Link>
+    </div>
+   ) : (
+    <SignInButton />
+   )}
   </div>
  );
 };
