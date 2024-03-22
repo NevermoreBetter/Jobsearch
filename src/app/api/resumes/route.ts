@@ -26,7 +26,6 @@ export async function POST(req: Request) {
   }
 
   const userData = await db.user.findFirst({ where: { externalId: user.id } });
-  console.log(userData);
   const { type, position, experience, salary, location, description } =
    await req.json();
 
@@ -38,7 +37,7 @@ export async function POST(req: Request) {
     salary,
     location,
     description,
-    authorId: userData!.id,
+    authorId: userData!.externalId,
    },
   });
   return NextResponse.json(createResume, { status: 201 });

@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Slider } from "@/components/ui/slider";
+import { useMutation } from "@tanstack/react-query";
 
 const FormSchema = z.object({
  position: z.string().min(5, {
@@ -35,13 +36,48 @@ const FormSchema = z.object({
  type: z.string(),
 });
 
-export const ProfileForm = () => {
+interface IProps {
+ resume?: {
+  id: string;
+  position: string;
+  experience: number;
+  salary: string;
+  location: string;
+  description: string;
+  type: string;
+ };
+}
+
+export const ProfileForm = ({ resume }: IProps) => {
+ console.log(resume);
+
+ const { mutate } = useMutation({
+  mutationFn: async (editedPost: {
+   id: string;
+   position: string;
+   experience: number;
+   salary: string;
+   location: string;
+   description: string;
+   type: string;
+  }) => {
+   return axios.patch(`/api/${resume!.id}`, editedPost);
+  },
+  onSuccess: () => {
+   alert("success");
+  },
+ });
+
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
   defaultValues: {
    position: "",
   },
  });
+
+ async function onEdit(data: z.infer<typeof FormSchema>) {
+  mutate(data);
+ }
 
  async function onSubmit(data: z.infer<typeof FormSchema>) {
   try {
@@ -61,12 +97,20 @@ export const ProfileForm = () => {
 
  return (
   <Form {...form}>
-   <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+   <form
+    onSubmit={
+     !!resume ? form.handleSubmit(onEdit) : form.handleSubmit(onSubmit)
+    }
+    className="w-2/3 space-y-6"
+   >
     <FormField
      control={form.control}
      name="position"
      render={({ field }) => (
-      <FormItem className="flex justify-between items-center">
+      <FormItem
+       defaultValue={!!resume ? resume.position : ""}
+       className="flex justify-between items-center"
+      >
        <FormLabel>Position</FormLabel>
        <FormControl>
         <Input placeholder="This is your public display name." {...field} />
@@ -82,7 +126,11 @@ export const ProfileForm = () => {
       <FormItem className="flex justify-between items-center">
        <FormLabel>Salary</FormLabel>
        <FormControl>
-        <Input placeholder="Your monthly salary in USD" {...field} />
+        <Input
+         defaultValue={!!resume ? resume.salary : ""}
+         placeholder="Your monthly salary in USD"
+         {...field}
+        />
        </FormControl>
        <FormMessage />
       </FormItem>
@@ -97,7 +145,7 @@ export const ProfileForm = () => {
        <FormControl>
         <div className="flex flex-col w-[70%]">
          <Slider
-          defaultValue={[0]}
+          defaultValue={!!resume ? [resume.experience] : [0]}
           max={5}
           step={1}
           onValueChange={(value) => field.onChange(value[0])}
@@ -124,7 +172,11 @@ export const ProfileForm = () => {
       <FormItem className="flex justify-between items-center">
        <FormLabel>Location</FormLabel>
        <FormControl>
-        <Input placeholder="Where do you live?" {...field} />
+        <Input
+         defaultValue={!!resume ? resume.location : ""}
+         placeholder="Where do you live?"
+         {...field}
+        />
        </FormControl>
        <FormMessage />
       </FormItem>
@@ -138,6 +190,7 @@ export const ProfileForm = () => {
        <FormLabel>Description</FormLabel>
        <FormControl>
         <Input
+         defaultValue={!!resume ? resume.description : ""}
          placeholder="Write a brief description of yourself."
          {...field}
         />
@@ -153,14 +206,17 @@ export const ProfileForm = () => {
       <FormItem className="flex justify-between items-center">
        <FormLabel>Employment type</FormLabel>
        <FormControl>
-        <Input placeholder="Type" {...field} />
+        <Input
+         defaultValue={!!resume ? resume.type : ""}
+         placeholder="Type"
+         {...field}
+        />
        </FormControl>
        <FormMessage />
       </FormItem>
      )}
     />
-
-    <Button type="submit">Submit</Button>
+    {!!resume ? <Button>Edit</Button> : <Button type="submit">Submit</Button>}
    </form>
   </Form>
  );
