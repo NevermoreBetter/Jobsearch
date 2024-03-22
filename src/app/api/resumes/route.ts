@@ -43,7 +43,7 @@ export async function POST(req: Request) {
   return NextResponse.json(createResume, { status: 201 });
  } catch (error) {
   return NextResponse.json(
-   { message: "Something went wrong in api" + error.message },
+   { message: "Something went wrong in api" },
    { status: 500 }
   );
  }
