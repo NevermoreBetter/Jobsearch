@@ -1,7 +1,7 @@
 "use client";
 import { UserButton } from "@clerk/nextjs";
 import { useEffect } from "react";
-import Home from "./_components/home";
+import Home from "./_components/Home";
 
 export default function HomePage() {
  useEffect(() => {
