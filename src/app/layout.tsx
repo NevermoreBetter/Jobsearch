@@ -30,7 +30,6 @@ export default function RootLayout({
      >
       <QueryProvider>
        {children}
-
        <Toaster />
       </QueryProvider>
      </ThemeProvider>

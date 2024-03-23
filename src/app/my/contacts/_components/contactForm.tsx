@@ -20,41 +20,32 @@ import { useMutation } from "@tanstack/react-query";
 
 const FormSchema = z.object({
  id: z.string().optional(),
- position: z.string().min(5, {
-  message: "Position must be at least 5 characters.",
+ firstName: z.string().min(5, {
+  message: "First name must be at least 5 characters.",
  }),
- experience: z.number(),
- salary: z.string(),
- location: z.string(),
- description: z
-  .string()
-  .min(10, {
-   message: "Description must be at least 10 characters.",
-  })
-  .max(250, {
-   message: "Description must be at most 250 characters.",
-  }),
- type: z.string(),
+ lastName: z.string().min(5, {
+  message: "Last name must be at least 5 characters.",
+ }),
+ email: z.string().email(),
+ image: z.string(),
 });
 
 interface IProps {
- resume?: {
+ user?: {
   id: string;
-  position: string;
-  experience: number;
-  salary: string;
-  location: string;
-  description: string;
-  type: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  image: string;
  };
 }
 
-export const ProfileForm = ({ resume }: IProps) => {
- console.log(resume?.position);
+export const ContactForm = ({ user }: IProps) => {
+ console.log(user);
 
  const { mutate } = useMutation({
-  mutationFn: async (editedPost: z.infer<typeof FormSchema>) => {
-   return axios.patch(`/api/${resume!.id}`, editedPost);
+  mutationFn: async (editedUser: z.infer<typeof FormSchema>) => {
+   return axios.patch(`/api/${user!.id}`, editedUser);
   },
   onSuccess: () => {
    alert("success");
@@ -63,9 +54,6 @@ export const ProfileForm = ({ resume }: IProps) => {
 
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
-  defaultValues: {
-   position: "",
-  },
  });
 
  async function onEdit(data: z.infer<typeof FormSchema>) {
@@ -74,7 +62,7 @@ export const ProfileForm = ({ resume }: IProps) => {
 
  async function onSubmit(data: z.infer<typeof FormSchema>) {
   try {
-   await axios.post("/api/resumes", data);
+   await axios.post("/api/user", data);
    toast({
     title: "You submitted the following values:",
     description: (
@@ -91,21 +79,19 @@ export const ProfileForm = ({ resume }: IProps) => {
  return (
   <Form {...form}>
    <form
-    onSubmit={
-     !!resume ? form.handleSubmit(onEdit) : form.handleSubmit(onSubmit)
-    }
+    onSubmit={!!user ? form.handleSubmit(onEdit) : form.handleSubmit(onSubmit)}
     className="w-[80%]  space-y-6"
    >
     <FormField
      control={form.control}
-     name="position"
+     name="firstName"
      render={({ field }) => (
       <FormItem>
        <FormLabel>Position</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
          <Input
-          defaultValue={!!resume ? resume.position : ""}
+          defaultValue={!!user ? user.firstName : ""}
           placeholder="Your position title"
           {...field}
          />
@@ -117,14 +103,14 @@ export const ProfileForm = ({ resume }: IProps) => {
     />
     <FormField
      control={form.control}
-     name="salary"
+     name="lastName"
      render={({ field }) => (
       <FormItem>
        <FormLabel>Salary</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
          <Input
-          defaultValue={!!resume ? resume.salary : ""}
+          defaultValue={!!user ? user.lastName : ""}
           placeholder="Your monthly salary in USD"
           {...field}
          />
@@ -136,29 +122,17 @@ export const ProfileForm = ({ resume }: IProps) => {
     />
     <FormField
      control={form.control}
-     name="experience"
+     name="email"
      render={({ field }) => (
       <FormItem>
        <FormLabel>Experience</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <>
-          <Slider
-           defaultValue={!!resume ? [resume.experience] : [0]}
-           max={5}
-           step={1}
-           onValueChange={(value) => field.onChange(value[0])}
-          />
-
-          <div className="flex justify-between items-center w-full">
-           <p>No exp</p>
-           <p>1 year</p>
-           <p>2 years</p>
-           <p>3 years</p>
-           <p>4 years</p>
-           <p>5 years</p>
-          </div>
-         </>
+         <Input
+          defaultValue={!!user ? user.email : ""}
+          placeholder="Your monthly salary in USD"
+          {...field}
+         />
         </FormControl>
         <FormMessage />
        </div>
@@ -167,14 +141,14 @@ export const ProfileForm = ({ resume }: IProps) => {
     />
     <FormField
      control={form.control}
-     name="location"
+     name="image"
      render={({ field }) => (
       <FormItem>
        <FormLabel>Location</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
          <Input
-          defaultValue={!!resume ? resume.location : ""}
+          defaultValue={!!user ? user.image : ""}
           placeholder="Where do you live?"
           {...field}
          />
@@ -184,45 +158,7 @@ export const ProfileForm = ({ resume }: IProps) => {
       </FormItem>
      )}
     />
-    <FormField
-     control={form.control}
-     name="description"
-     render={({ field }) => (
-      <FormItem>
-       <FormLabel>Description</FormLabel>
-       <div className="flex flex-col w-[70%] justify-between">
-        <FormControl>
-         <Input
-          defaultValue={!!resume ? resume.description : ""}
-          placeholder="Write a brief description of yourself."
-          {...field}
-         />
-        </FormControl>
-        <FormMessage />
-       </div>
-      </FormItem>
-     )}
-    />
-    <FormField
-     control={form.control}
-     name="type"
-     render={({ field }) => (
-      <FormItem>
-       <FormLabel>Employment type</FormLabel>
-       <div className="flex flex-col w-[70%] justify-between">
-        <FormControl>
-         <Input
-          defaultValue={!!resume ? resume.type : ""}
-          placeholder="Type"
-          {...field}
-         />
-        </FormControl>
-        <FormMessage />
-       </div>
-      </FormItem>
-     )}
-    />
-    {!!resume ? <Button>Edit</Button> : <Button type="submit">Submit</Button>}
+    <Button>Edit</Button>
    </form>
   </Form>
  );

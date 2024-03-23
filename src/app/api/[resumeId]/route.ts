@@ -7,6 +7,21 @@ interface ContextProps {
  };
 }
 
+export async function GET(req: Request, context: ContextProps) {
+ try {
+  const { params } = context;
+  const resume = await db.resume.findUnique({
+   where: { id: params.resumeId },
+  });
+  return NextResponse.json(resume, { status: 200 });
+ } catch (error) {
+  return NextResponse.json(
+   { message: "Something went wrong in api" },
+   { status: 500 }
+  );
+ }
+}
+
 export async function PATCH(req: Request, context: ContextProps) {
  try {
   const { params } = context;

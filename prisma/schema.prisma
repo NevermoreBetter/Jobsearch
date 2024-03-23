@@ -23,8 +23,8 @@ model Resume {
   location    String
   description String
   published   Boolean  @default(false)
-  author      User?     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId    String?   @unique
+  author      User?    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String?  @unique
   createdAt   DateTime @default(now())
 }
 
@@ -36,5 +36,17 @@ model User {
   email      String   @unique
   image      String
   resume     Resume?
+  vacancy    Vacancy?
   createdAt  DateTime @default(now())
+}
+
+model Vacancy {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  locations   String[]
+  type        String
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String   @unique
 }
