@@ -50,11 +50,9 @@ interface IProps {
 }
 
 export const ProfileForm = ({ resume }: IProps) => {
- console.log(resume?.position);
-
  const { mutate } = useMutation({
   mutationFn: async (editedPost: z.infer<typeof FormSchema>) => {
-   return axios.patch(`/api/${resume!.id}`, editedPost);
+   return axios.patch(`/api/resume/${resume!.id}`, editedPost);
   },
   onSuccess: () => {
    alert("success");
@@ -64,7 +62,12 @@ export const ProfileForm = ({ resume }: IProps) => {
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
   defaultValues: {
-   position: "",
+   position: !!resume ? resume.position : "",
+   experience: !!resume ? resume.experience : 0,
+   salary: !!resume ? resume.salary : "",
+   location: !!resume ? resume.location : "",
+   description: !!resume ? resume.description : "",
+   type: !!resume ? resume.type : "",
   },
  });
 
@@ -74,7 +77,7 @@ export const ProfileForm = ({ resume }: IProps) => {
 
  async function onSubmit(data: z.infer<typeof FormSchema>) {
   try {
-   await axios.post("/api/resumes", data);
+   await axios.post("/api/resume/resumes", data);
    toast({
     title: "You submitted the following values:",
     description: (

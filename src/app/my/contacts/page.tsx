@@ -4,7 +4,7 @@ import { db } from "@/lib/prisma";
 
 const ContactsPage = async () => {
  const auth = await currentUser();
- const user = db.user.findUnique({ where: { externalId: auth!.id } });
+ const user = await db.user.findUnique({ where: { externalId: auth!.id } });
  return (
   <div>
    <ContactForm user={user} />

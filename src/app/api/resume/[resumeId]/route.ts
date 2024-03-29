@@ -44,7 +44,7 @@ export async function PATCH(req: Request, context: ContextProps) {
   );
  } catch (error) {
   return NextResponse.json(
-   { message: "Something went wrong in api" },
+   { message: "Something went wrong in api" + error },
    { status: 500 }
   );
  }

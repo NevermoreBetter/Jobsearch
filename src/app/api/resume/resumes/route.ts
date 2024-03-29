@@ -26,6 +26,7 @@ export async function POST(req: Request) {
   }
 
   const userData = await db.user.findFirst({ where: { externalId: user.id } });
+  console.log(userData, user.id);
   const { type, position, experience, salary, location, description } =
    await req.json();
 
@@ -37,13 +38,13 @@ export async function POST(req: Request) {
     salary,
     location,
     description,
-    authorId: userData!.externalId,
+    authorId: userData!.id,
    },
   });
   return NextResponse.json(createResume, { status: 201 });
  } catch (error) {
   return NextResponse.json(
-   { message: "Something went wrong in api" },
+   { message: "Something went wrong in api" + error },
    { status: 500 }
   );
  }

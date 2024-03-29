@@ -1,5 +1,5 @@
 const JobsSidebar = () => {
- return <aside className="flex-1">Filters</aside>;
+ return <aside className="w-[20%]">Filters</aside>;
 };
 
 export default JobsSidebar;

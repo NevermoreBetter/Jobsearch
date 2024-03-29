@@ -59,7 +59,6 @@ export async function POST(req: Request) {
     firstName: payload.data.first_name,
     lastName: payload.data.last_name,
     email: payload.data.email_addresses[0].email_address,
-    image: payload.data.image_url,
     externalId: payload.data.id,
    },
   });
@@ -84,7 +83,6 @@ export async function POST(req: Request) {
    data: {
     firstName: payload.data.first_name,
     lastName: payload.data.last_name,
-    image: payload.data.image_url,
     email: payload.data.email_addresses[0].email_address,
    },
   });

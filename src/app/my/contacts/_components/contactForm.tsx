@@ -15,19 +15,23 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { Slider } from "@/components/ui/slider";
 import { useMutation } from "@tanstack/react-query";
 
 const FormSchema = z.object({
  id: z.string().optional(),
- firstName: z.string().min(5, {
-  message: "First name must be at least 5 characters.",
- }),
- lastName: z.string().min(5, {
-  message: "Last name must be at least 5 characters.",
- }),
- email: z.string().email(),
- image: z.string(),
+ firstName: z
+  .string()
+  .min(5, {
+   message: "First name must be at least 5 characters.",
+  })
+  .optional(),
+ lastName: z
+  .string()
+  .min(5, {
+   message: "Last name must be at least 5 characters.",
+  })
+  .optional(),
+ email: z.string().email().optional(),
 });
 
 interface IProps {
@@ -41,11 +45,10 @@ interface IProps {
 }
 
 export const ContactForm = ({ user }: IProps) => {
- console.log(user);
 
  const { mutate } = useMutation({
   mutationFn: async (editedUser: z.infer<typeof FormSchema>) => {
-   return axios.patch(`/api/${user!.id}`, editedUser);
+   return axios.patch(`/api/user/${user!.id}`, editedUser);
   },
   onSuccess: () => {
    alert("success");
@@ -54,9 +57,15 @@ export const ContactForm = ({ user }: IProps) => {
 
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
+  defaultValues: {
+   firstName: !!user ? user.firstName : "",
+   lastName: !!user ? user.lastName : "",
+   email: !!user ? user.email : "",
+  },
  });
 
  async function onEdit(data: z.infer<typeof FormSchema>) {
+  console.log(data);
   mutate(data);
  }
 
@@ -87,14 +96,10 @@ export const ContactForm = ({ user }: IProps) => {
      name="firstName"
      render={({ field }) => (
       <FormItem>
-       <FormLabel>Position</FormLabel>
+       <FormLabel>First Name</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input
-          defaultValue={!!user ? user.firstName : ""}
-          placeholder="Your position title"
-          {...field}
-         />
+         <Input defaultValue={!!user ? user.firstName : ""} {...field} />
         </FormControl>
         <FormMessage />
        </div>
@@ -106,14 +111,10 @@ export const ContactForm = ({ user }: IProps) => {
      name="lastName"
      render={({ field }) => (
       <FormItem>
-       <FormLabel>Salary</FormLabel>
+       <FormLabel>Last Name</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input
-          defaultValue={!!user ? user.lastName : ""}
-          placeholder="Your monthly salary in USD"
-          {...field}
-         />
+         <Input defaultValue={!!user ? user.lastName : ""} {...field} />
         </FormControl>
         <FormMessage />
        </div>
@@ -125,33 +126,10 @@ export const ContactForm = ({ user }: IProps) => {
      name="email"
      render={({ field }) => (
       <FormItem>
-       <FormLabel>Experience</FormLabel>
+       <FormLabel>Email</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input
-          defaultValue={!!user ? user.email : ""}
-          placeholder="Your monthly salary in USD"
-          {...field}
-         />
-        </FormControl>
-        <FormMessage />
-       </div>
-      </FormItem>
-     )}
-    />
-    <FormField
-     control={form.control}
-     name="image"
-     render={({ field }) => (
-      <FormItem>
-       <FormLabel>Location</FormLabel>
-       <div className="flex flex-col w-[70%] justify-between">
-        <FormControl>
-         <Input
-          defaultValue={!!user ? user.image : ""}
-          placeholder="Where do you live?"
-          {...field}
-         />
+         <Input defaultValue={!!user ? user.email : ""} {...field} />
         </FormControl>
         <FormMessage />
        </div>

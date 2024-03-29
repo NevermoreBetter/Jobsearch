@@ -10,9 +10,15 @@ const Navbar = async () => {
     <BriefcaseBusinessIcon />
    </Link>
    <div className="flex justify-between w-[35%]">
-    <Link href="/messages">Messages</Link>
-    <Link href="/jobs">Jobs</Link>
-    <Link href="/about-us">About us</Link>
+    <Link href="/messages">
+     <p> Messages</p>
+    </Link>
+    <Link href="/jobs">
+     <p> Jobs</p>
+    </Link>
+    <Link href="/about-us">
+     <p> About us</p>
+    </Link>
    </div>
    {!!user ? (
     <div className="flex items-center gap-2">
