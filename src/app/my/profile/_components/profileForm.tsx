@@ -38,7 +38,7 @@ const FormSchema = z.object({
 });
 
 interface IProps {
- resume?: {
+ resume: {
   id: string;
   position: string;
   experience: number;
@@ -46,7 +46,7 @@ interface IProps {
   location: string;
   description: string;
   type: string;
- };
+ } | null;
 }
 
 export const ProfileForm = ({ resume }: IProps) => {

@@ -1,9 +1,21 @@
 "use client";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import JobItem from "./job-item";
 import axios from "axios";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
+import Link from "next/link";
+
+interface IJob {
+ id: string;
+ title: string;
+ description: string;
+ locations: string[];
+ type: string;
+ createdAt: string;
+ authorId: string;
+}
+
 const JobsList = () => {
  const [itemOffset, setItemOffset] = useState(0);
  const jobsPerPage = 1;
@@ -18,14 +30,13 @@ const JobsList = () => {
    return data;
   },
  });
+
  if (isPending) return <div>Loading...</div>;
- console.log(jobs);
  const endOffset = itemOffset + jobsPerPage;
- console.log(`Loading items from ${itemOffset} to ${endOffset}`);
  const currentItems = jobs.slice(itemOffset, endOffset);
  const pageCount = Math.ceil(jobs.length / jobsPerPage);
 
- const handlePageClick = (event) => {
+ const handlePageClick = (event: { selected: number }) => {
   const newOffset = (event.selected * jobsPerPage) % jobs.length;
   console.log(
    `User requested page number ${event.selected}, which is offset ${newOffset}`
@@ -35,8 +46,10 @@ const JobsList = () => {
 
  return (
   <div className="w-[70%] flex flex-col gap-4 py-4 justify-center">
-   {currentItems.map((job) => (
-    <JobItem key={job.id} job={job} />
+   {currentItems.map((job: IJob) => (
+    <Link href={`/jobs/${job.title}`} key={job.id}>
+     <JobItem job={job} />
+    </Link>
    ))}
    <ReactPaginate
     breakLabel="..."

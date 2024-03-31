@@ -1,13 +1,15 @@
 import { Building, MapPin } from "lucide-react";
 
 interface IJob {
- id: string;
- title: string;
- description: string;
- locations: string[];
- type: string;
- createdAt: string;
- authorId: string;
+ job: {
+  id: string;
+  title: string;
+  description: string;
+  locations: string[];
+  type: string;
+  createdAt: string;
+  authorId: string;
+ };
 }
 
 const JobItem = ({ job }: IJob) => {
