@@ -49,8 +49,6 @@ export async function POST(req: Request) {
   });
  }
 
- // Get the ID and type
- const { id } = evt.data;
  const eventType = evt.type;
 
  if (eventType === "user.created") {
@@ -59,6 +57,7 @@ export async function POST(req: Request) {
     firstName: payload.data.first_name,
     lastName: payload.data.last_name,
     email: payload.data.email_addresses[0].email_address,
+    photo: payload.data.profile_image_url,
     externalId: payload.data.id,
    },
   });

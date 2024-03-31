@@ -38,7 +38,7 @@ export async function POST(req: Request) {
     salary,
     location,
     description,
-    authorId: userData!.id,
+    authorId: userData!.externalId,
    },
   });
   return NextResponse.json(createResume, { status: 201 });
