@@ -18,6 +18,7 @@ interface IJob {
 
 const JobsList = () => {
  const [itemOffset, setItemOffset] = useState(0);
+ let endOffset, currentItems, pageCount;
  const jobsPerPage = 1;
  const {
   isPending,
@@ -32,15 +33,15 @@ const JobsList = () => {
  });
 
  if (isPending) return <div>Loading...</div>;
- const endOffset = itemOffset + jobsPerPage;
- const currentItems = jobs.slice(itemOffset, endOffset);
- const pageCount = Math.ceil(jobs.length / jobsPerPage);
+ if (jobs) {
+  endOffset = itemOffset + jobsPerPage;
+  currentItems = jobs.slice(itemOffset, endOffset);
+  pageCount = Math.ceil(jobs.length / jobsPerPage);
+ }
 
  const handlePageClick = (event: { selected: number }) => {
   const newOffset = (event.selected * jobsPerPage) % jobs.length;
-  console.log(
-   `User requested page number ${event.selected}, which is offset ${newOffset}`
-  );
+
   setItemOffset(newOffset);
  };
 
@@ -56,7 +57,7 @@ const JobsList = () => {
     nextLabel=">"
     onPageChange={handlePageClick}
     pageRangeDisplayed={5}
-    pageCount={pageCount}
+    pageCount={pageCount!}
     previousLabel="<"
     className="flex text-gray-400 gap-4 justify-center items-center"
     nextClassName="text-white"

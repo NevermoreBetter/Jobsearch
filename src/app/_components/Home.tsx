@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import WeProvide from "./we-provide";
 import { Button } from "@/components/ui/button";
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
+import { ArrowBigRight } from "lucide-react";
 import Link from "next/link";
 
 const Home = () => {
