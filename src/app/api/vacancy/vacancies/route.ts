@@ -7,7 +7,7 @@ export async function GET() {
   return NextResponse.json(vacancy, { status: 200 });
  } catch (error) {
   return NextResponse.json(
-   { message: "Something went wrong" },
+   { message: "Something went wrong in api" },
    { status: 500 }
   );
  }

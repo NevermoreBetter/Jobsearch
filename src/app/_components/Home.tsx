@@ -72,7 +72,7 @@ const Home = () => {
      data-scroll-speed="0.7"
      className="relative h-full w-full "
     >
-     <h1 className="inline-block absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-white">
+     <h1 className="inline-block absolute z-20 top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-5xl font-bold text-white">
       Find your dream{" "}
       <span id="change" className="underline uppercase text-rose-500"></span>
      </h1>
@@ -80,7 +80,7 @@ const Home = () => {
       <Button
        size={"lg"}
        variant={"ghost"}
-       className="flex absolute z-20 top-[70%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl font-bold text-white hover:bg-rose-700/40"
+       className="flex absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl font-bold text-white hover:bg-rose-700/40"
       >
        Get Started <ArrowBigRight />
       </Button>

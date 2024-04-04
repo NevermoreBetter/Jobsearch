@@ -1,5 +1,5 @@
 import { MotionValue, useTransform, motion } from "framer-motion";
-import { useEffect } from "react";
+import Image from "next/image";
 
 interface IProps {
  title: string;
@@ -9,6 +9,7 @@ interface IProps {
  progress: MotionValue<number>;
  range: number[];
  target: number;
+ img: string;
 }
 
 const Item = ({
@@ -19,15 +20,9 @@ const Item = ({
  progress,
  range,
  target,
+ img,
 }: IProps) => {
  const scale = useTransform(progress, range, [1, target]);
-
- useEffect(() => {
-  (async () => {
-   const LocomotiveScroll = (await import("locomotive-scroll")).default;
-   const locomotiveScroll = new LocomotiveScroll();
-  })();
- }, []);
 
  return (
   <div className="h-screen w-full flex flex-col justify-center items-center gap-4 sticky top-0 ">
@@ -35,9 +30,8 @@ const Item = ({
     style={{
      scale,
      display: "flex",
-     flexDirection: "column",
      alignItems: "center",
-     justifyContent: "flex-start",
+     justifyContent: "space-between",
      padding: "2.5rem",
      borderRadius: "0.5rem",
      gap: "1rem",
@@ -47,8 +41,13 @@ const Item = ({
      top: `calc(-10% + ${i * 25}px)`,
     }}
    >
-    <h1 className="font-bold text-2xl">{title}</h1>
-    <p className="text-xl">{description}</p>
+    <div className="w-2/3 flex flex-col gap-2 justify-center items-start">
+     <h1 className="font-bold text-2xl">{title}</h1>
+     <p className="text-xl">{description}</p>
+    </div>
+    <div className="h-full w-1/4 flex justify-center items-center p-4 relative">
+     <Image src={img} alt={title} fill />
+    </div>
    </motion.div>
   </div>
  );

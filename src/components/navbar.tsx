@@ -1,6 +1,7 @@
 "use client";
 import { SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import { BriefcaseBusinessIcon } from "lucide-react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -12,20 +13,41 @@ const Navbar = () => {
    </Link>
    <div className="flex justify-between w-[35%]">
     <Link href="/messages">
-     <p> Messages</p>
+     <motion.p
+      whileHover={{ scale: 1.1, color: "#dda15e" }}
+      whileTap={{ scale: 0.9 }}
+     >
+      {" "}
+      Messages
+     </motion.p>
     </Link>
     <Link href="/jobs">
-     <p> Jobs</p>
+     <motion.p
+      whileHover={{ scale: 1.1, color: "#dda15e" }}
+      whileTap={{ scale: 0.9 }}
+     >
+      Jobs
+     </motion.p>
     </Link>
     <Link href="/about-us">
-     <p> About us</p>
+     <motion.p
+      whileHover={{ scale: 1.1, color: "#dda15e" }}
+      whileTap={{ scale: 0.9 }}
+     >
+      About us
+     </motion.p>
     </Link>
    </div>
    {isSignedIn ? (
     <div className="flex items-center gap-2">
      <UserButton afterSignOutUrl="/jobs" />
      <Link href="/my/profile">
-      <p>Edit</p>
+      <motion.p
+       whileHover={{ scale: 1.1, color: "#dda15e" }}
+       whileTap={{ scale: 0.9 }}
+      >
+       Edit
+      </motion.p>
      </Link>
     </div>
    ) : (

@@ -18,7 +18,6 @@ export default function ProfileLayout({
 }>) {
  return (
   <>
-   <Navbar />
    <SectionSelect />
    {children}
    <Toaster />
