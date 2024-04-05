@@ -3,15 +3,15 @@ import { NextResponse } from "next/server";
 
 interface ContextProps {
  params: {
-  resumeId: string;
+  resumeTitle: string;
  };
 }
 
 export async function GET(req: Request, context: ContextProps) {
  try {
   const { params } = context;
-  const resume = await db.resume.findUnique({
-   where: { id: params.resumeId },
+  const resume = await db.resume.findFirst({
+   where: { position: params.resumeTitle },
   });
   return NextResponse.json(resume, { status: 200 });
  } catch (error) {

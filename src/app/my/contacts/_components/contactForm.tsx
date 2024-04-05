@@ -40,12 +40,11 @@ interface IProps {
   firstName: string;
   lastName: string;
   email: string;
-  image: string;
+  photo: string;
  };
 }
 
 export const ContactForm = ({ user }: IProps) => {
-
  const { mutate } = useMutation({
   mutationFn: async (editedUser: z.infer<typeof FormSchema>) => {
    return axios.patch(`/api/user/${user!.id}`, editedUser);

@@ -15,7 +15,7 @@ interface IJob {
 const JobItem = ({ job }: IJob) => {
  return (
   <div className="w-[90%] h-[200px] bg-red-500 text-white px-5">
-   <h3>{job.title}</h3>
+   <p>{job.title}</p>
    <div className="flex justify-start items-center gap-4">
     <p className="flex items-center gap-2">
      <Building className="size-4" /> {job.type}

@@ -33,7 +33,6 @@ const JobsList = () => {
  });
 
  if (isPending) return <div>Loading...</div>;
- console.log(jobs);
  if (jobs) {
   endOffset = itemOffset + jobsPerPage;
   currentItems = jobs.slice(itemOffset, endOffset);

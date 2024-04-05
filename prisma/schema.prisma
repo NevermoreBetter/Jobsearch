@@ -36,7 +36,7 @@ model User {
   photo      String
   email      String   @unique
   resume     Resume?
-  vacancy    Vacancy?
+  vacancy    Vacancy[]
   createdAt  DateTime @default(now())
 }
 

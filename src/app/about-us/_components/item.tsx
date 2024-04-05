@@ -45,7 +45,7 @@ const Item = ({
      <h1 className="font-bold text-2xl">{title}</h1>
      <p className="text-xl">{description}</p>
     </div>
-    <div className="h-full w-1/4 flex justify-center items-center p-4 relative">
+    <div className="h-full w-[20%] flex justify-center items-center p-4 relative">
      <Image src={img} alt={title} fill />
     </div>
    </motion.div>
