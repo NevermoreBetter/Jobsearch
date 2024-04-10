@@ -46,7 +46,7 @@ const Navbar = () => {
         Resumes
        </motion.p>
       </Link>
-      <Link href="/create">
+      <Link href="/create-list">
        <motion.p
         whileHover={{ scale: 1.1, color: "#dda15e" }}
         whileTap={{ scale: 0.9 }}

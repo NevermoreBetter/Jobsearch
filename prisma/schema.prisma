@@ -45,9 +45,9 @@ model Vacancy {
   title       String
   description String
   createdAt   DateTime @default(now())
-  locations   String[]
+  locations   String
   type        String
-  salary      Int
+  salary      String
   experience  Int
   author      User     @relation(fields: [authorId], references: [id])
   authorId    String   @unique

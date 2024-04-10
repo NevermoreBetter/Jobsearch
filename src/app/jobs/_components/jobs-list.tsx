@@ -10,7 +10,7 @@ interface IJob {
  id: string;
  title: string;
  description: string;
- locations: string[];
+ locations: string;
  type: string;
  createdAt: string;
  authorId: string;
