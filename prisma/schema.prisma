@@ -50,5 +50,5 @@ model Vacancy {
   salary      String
   experience  Int
   author      User     @relation(fields: [authorId], references: [id])
-  authorId    String   @unique
+  authorId    String   
 }

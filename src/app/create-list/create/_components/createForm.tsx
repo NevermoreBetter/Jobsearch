@@ -16,11 +16,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Slider } from "@/components/ui/slider";
+import { useRouter } from "next/navigation";
+import { Textarea } from "@/components/ui/textarea";
 
 const FormSchema = z.object({
  id: z.string().optional(),
- title: z.string().min(5, {
-  message: "Position must be at least 5 characters.",
+ title: z.string().min(2, {
+  message: "Position must be at least 2 characters.",
  }),
  description: z.string(),
  locations: z.string(),
@@ -42,6 +44,7 @@ interface IProps {
 }
 
 export const CreateForm = () => {
+ const router = useRouter();
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
  });
@@ -57,6 +60,8 @@ export const CreateForm = () => {
      </pre>
     ),
    });
+   router.push("/create-list");
+   router.refresh();
   } catch (error) {
    console.log(error);
   }
@@ -148,7 +153,7 @@ export const CreateForm = () => {
        <FormLabel>Description</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input
+         <Textarea
           placeholder="Write a brief description of your vacancy."
           {...field}
          />
