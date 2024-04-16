@@ -38,7 +38,9 @@ const CreateListPage = async () => {
     <VacancyItem key={vacancy.id} vacancy={vacancy} />
    ))}
    <Link href="/create-list/create">
-    <Button variant="link">Create Vacancy</Button>
+    <Button variant="link" className="mb-5">
+     Create Vacancy
+    </Button>
    </Link>
   </div>
  );

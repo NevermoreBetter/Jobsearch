@@ -1,6 +1,8 @@
 "use client";
 import { fetchUser } from "@/actions";
 import { useQuery } from "@tanstack/react-query";
+import { Building, DollarSign, MapPin, Sparkle } from "lucide-react";
+import Image from "next/image";
 
 interface IData {
  data: {
@@ -23,8 +25,10 @@ const JobDetail = ({ data }: IData) => {
   error,
  } = useQuery({
   queryKey: ["user", data.authorId],
-  queryFn: () => fetchUser(data),
+  queryFn: () => fetchUser(data.authorId),
  });
+
+ console.log(userData);
 
  if (isLoading) {
   return <div>Loading...</div>;
@@ -37,22 +41,39 @@ const JobDetail = ({ data }: IData) => {
  return (
   <div className="flex gap-4 items-start justify-around py-4">
    <div className="w-[60%]">
-    <h1> {data.title}</h1>
-    <p> {data.description}</p>
-   </div>
-   <div className="w-[20%] border border-white p-4 rounded-lg">
-    <p>{data.salary}</p>
-    <p>{data.experience}</p>
-    <ul className="flex gap-2">
-     {data.locations.map((location) => (
-      <li key={location}>{location}</li>
-     ))}
-    </ul>
-    <p> {data.type}</p>
-    <div className="flex gap-2">
+    <h1 className="text-3xl font-bold mb-5"> {data.title}</h1>
+    <p className="text-lg mb-5"> {data.description}</p>
+    <div className="flex items-center gap-2">
+     <Image
+      src={userData.photo}
+      width={35}
+      height={35}
+      alt="user"
+      className="rounded-full"
+     />
+
      <p> {userData?.firstName}</p>
      <p> {userData?.lastName}</p>
     </div>
+   </div>
+   <div className="w-[20%] border border-white p-4 rounded-lg">
+    <ul className="flex flex-col gap-3">
+     <li className="flex gap-2">
+      <DollarSign />
+      {data.salary}
+     </li>
+     <li className="flex gap-2">
+      <Sparkle />
+      {data.experience} year(s) of experience
+     </li>
+     <li className="flex gap-2">
+      <MapPin />
+      {data.locations}
+     </li>
+     <li className="flex gap-2">
+      <Building /> {data.type}
+     </li>
+    </ul>
    </div>
   </div>
  );

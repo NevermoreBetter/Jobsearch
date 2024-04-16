@@ -14,10 +14,10 @@ import {
  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
 import { Slider } from "@/components/ui/slider";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import { useMutation } from "@tanstack/react-query";
 
 const FormSchema = z.object({
  id: z.string().optional(),
@@ -32,44 +32,52 @@ const FormSchema = z.object({
 });
 
 interface IProps {
- resume: {
+ vacancy: {
   id: string;
-  position: string;
-  experience: number;
-  salary: string;
-  location: string;
+  title: string;
   description: string;
+  createdAt: Date;
+  locations: string;
   type: string;
- } | null;
+  salary: string;
+  experience: number;
+  authorId: string;
+ };
 }
 
-export const CreateForm = () => {
- const router = useRouter();
+const EditForm = ({ vacancy }: IProps) => {
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
+  defaultValues: {
+   id: vacancy.id,
+   title: vacancy.title,
+   description: vacancy.description,
+   locations: vacancy.locations,
+   type: vacancy.type,
+   salary: vacancy.salary,
+   experience: vacancy.experience,
+  },
+ });
+ const { mutate } = useMutation({
+  mutationFn: async (editedVacancy: z.infer<typeof FormSchema>) => {
+   return axios.patch(`/api/vacancy/${vacancy!.id}`, editedVacancy);
+  },
+  onSuccess: () => {
+   alert("success");
+  },
  });
 
- async function onSubmit(data: z.infer<typeof FormSchema>) {
-  try {
-   await axios.post("/api/vacancy/vacancies", data);
-   toast({
-    title: "You submitted the following values:",
-    description: (
-     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-      <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-     </pre>
-    ),
-   });
-   router.push("/create-list");
-   router.refresh();
-  } catch (error) {
-   console.log(error);
-  }
+ async function onEdit(data: z.infer<typeof FormSchema>) {
+  console.log(data);
+  mutate(data);
  }
 
  return (
   <Form {...form}>
-   <form onSubmit={form.handleSubmit(onSubmit)} className="w-[80%] space-y-6">
+   <form
+    onSubmit={form.handleSubmit(onEdit)}
+    className="w-[80%] mt-5 space-y-6"
+   >
     <FormField
      control={form.control}
      name="title"
@@ -113,6 +121,7 @@ export const CreateForm = () => {
            max={5}
            step={1}
            onValueChange={(value) => field.onChange(value[0])}
+           defaultValue={!!vacancy ? [vacancy.experience] : [0]}
           />
 
           <div className="flex justify-between items-center w-full">
@@ -155,6 +164,7 @@ export const CreateForm = () => {
         <FormControl>
          <Textarea
           placeholder="Write a brief description of your vacancy."
+          rows={5}
           {...field}
          />
         </FormControl>
@@ -178,8 +188,10 @@ export const CreateForm = () => {
       </FormItem>
      )}
     />
-    <Button type="submit">Submit</Button>
+    <Button type="submit">Edit</Button>
    </form>
   </Form>
  );
 };
+
+export default EditForm;

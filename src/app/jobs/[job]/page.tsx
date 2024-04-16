@@ -8,7 +8,7 @@ interface IParams {
 }
 
 const JobPage = ({ params }: { params: IParams }) => {
- const { isPending, data, error } = useQuery({
+ const { isPending, data } = useQuery({
   queryKey: ["job"],
   queryFn: async () => {
    const { data } = await axios.get(`/api/vacancy/${params.job}`);

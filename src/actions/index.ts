@@ -4,7 +4,7 @@ import { db } from "@/lib/prisma";
 
 export const fetchUser = async (data: any) => {
  try {
-  const user = await db.user.findUnique({ where: { externalId: data } });
+  const user = await db.user.findUnique({ where: { id: data } });
   return user;
  } catch (error) {
   console.error("Error fetching user:", error);
@@ -15,6 +15,7 @@ export const fetchUser = async (data: any) => {
 export const fetchVacancies = async (data: any) => {
  const vacancies = await db.vacancy.findMany({
   where: { authorId: data.id },
+  orderBy: { createdAt: "desc" },
  });
  return vacancies;
 };

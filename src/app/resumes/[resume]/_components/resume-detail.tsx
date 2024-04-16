@@ -23,7 +23,7 @@ const ResumeDetail = ({ data }: IData) => {
   error,
  } = useQuery({
   queryKey: ["user", data.authorId],
-  queryFn: () => fetchUser(data),
+  queryFn: () => fetchUser(data.authorId),
  });
 
  if (isLoading) {
