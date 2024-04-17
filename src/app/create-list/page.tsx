@@ -34,14 +34,14 @@ const CreateListPage = async () => {
 
  return (
   <div className="flex w-1/2 flex-col justify-center items-center mt-5 mx-auto">
-   {list.map((vacancy) => (
-    <VacancyItem key={vacancy.id} vacancy={vacancy} />
-   ))}
    <Link href="/create-list/create">
     <Button variant="link" className="mb-5">
      Create Vacancy
     </Button>
    </Link>
+   {list.map((vacancy) => (
+    <VacancyItem key={vacancy.id} vacancy={vacancy} />
+   ))}
   </div>
  );
 };

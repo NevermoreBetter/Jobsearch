@@ -13,7 +13,7 @@ const EditPage = async (props: { params: { name: string } }) => {
  }
 
  return (
-  <div>
+  <div className="flex justify-center items-center mt-5">
    <EditForm vacancy={vacancy} />
   </div>
  );

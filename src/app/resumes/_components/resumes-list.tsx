@@ -21,15 +21,14 @@ interface IResume {
 const ResumesList = () => {
  const [itemOffset, setItemOffset] = useState(0);
  let endOffset, currentItems, pageCount;
- const resumesPerPage = 1;
- const {
-  isPending,
-  data: resumes,
-  error,
- } = useQuery({
+ const resumesPerPage = 5;
+ const { isPending, data: resumes } = useQuery({
   queryKey: ["resumes"],
   queryFn: async () => {
    const { data } = await axios.get("api/resume/resumes");
+   data.sort((a: IResume, b: IResume) =>
+    b.createdAt.localeCompare(a.createdAt)
+   );
    return data;
   },
  });

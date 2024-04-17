@@ -16,8 +16,8 @@ interface IResume {
 
 const ResumeItem = ({ resume }: IResume) => {
  return (
-  <div className="w-[90%] h-[200px] bg-red-500 text-white px-5">
-   <p>{resume.position}</p>
+  <div className="w-full h-[250px] flex flex-col gap-3 justify-start items-start bg-gray-500 px-8 py-5 rounded-lg mb-5">
+   <p className="text-2xl font-bold text-white">{resume.position}</p>
    <div className="flex justify-start items-center gap-4">
     <p className="flex items-center gap-2">
      <Building className="size-4" /> {resume.type}

@@ -19,15 +19,12 @@ interface IJob {
 const JobsList = () => {
  const [itemOffset, setItemOffset] = useState(0);
  let endOffset, currentItems, pageCount;
- const jobsPerPage = 1;
- const {
-  isPending,
-  data: jobs,
-  error,
- } = useQuery({
+ const jobsPerPage = 5;
+ const { isPending, data: jobs } = useQuery({
   queryKey: ["jobs"],
   queryFn: async () => {
    const { data } = await axios.get("api/vacancy/vacancies");
+   data.sort((a: IJob, b: IJob) => b.createdAt.localeCompare(a.createdAt));
    return data;
   },
  });

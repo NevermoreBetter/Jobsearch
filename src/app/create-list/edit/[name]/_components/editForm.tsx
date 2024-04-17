@@ -46,6 +46,7 @@ interface IProps {
 }
 
 const EditForm = ({ vacancy }: IProps) => {
+ const router = useRouter();
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
   defaultValues: {
@@ -68,8 +69,9 @@ const EditForm = ({ vacancy }: IProps) => {
  });
 
  async function onEdit(data: z.infer<typeof FormSchema>) {
-  console.log(data);
   mutate(data);
+  router.push("/create-list");
+  router.refresh();
  }
 
  return (
@@ -118,6 +120,7 @@ const EditForm = ({ vacancy }: IProps) => {
         <FormControl>
          <>
           <Slider
+           min={0}
            max={5}
            step={1}
            onValueChange={(value) => field.onChange(value[0])}
@@ -130,7 +133,7 @@ const EditForm = ({ vacancy }: IProps) => {
            <p>2 years</p>
            <p>3 years</p>
            <p>4 years</p>
-           <p>5 years</p>
+           <p>5+ years</p>
           </div>
          </>
         </FormControl>

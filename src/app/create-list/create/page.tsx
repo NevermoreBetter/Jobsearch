@@ -2,7 +2,7 @@ import { CreateForm } from "./_components/createForm";
 
 const CreatePage = () => {
  return (
-  <div>
+  <div className="flex items-center justify-center mt-5">
    <CreateForm />
   </div>
  );

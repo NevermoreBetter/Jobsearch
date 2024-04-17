@@ -1,5 +1,6 @@
 "use client";
 import { fetchUser } from "@/actions";
+import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Building, DollarSign, MapPin, Sparkle } from "lucide-react";
 import Image from "next/image";
@@ -55,6 +56,9 @@ const JobDetail = ({ data }: IData) => {
      <p> {userData?.firstName}</p>
      <p> {userData?.lastName}</p>
     </div>
+    <Button variant={"default"} className="mt-5">
+     Apply for this job
+    </Button>
    </div>
    <div className="w-[20%] border border-white p-4 rounded-lg">
     <ul className="flex flex-col gap-3">

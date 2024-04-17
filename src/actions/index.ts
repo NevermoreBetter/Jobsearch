@@ -12,6 +12,8 @@ export const fetchUser = async (data: any) => {
  }
 };
 
+export const fetchAllVacancies = async () => await db.vacancy.findMany();
+
 export const fetchVacancies = async (data: any) => {
  const vacancies = await db.vacancy.findMany({
   where: { authorId: data.id },

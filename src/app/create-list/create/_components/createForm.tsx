@@ -47,6 +47,9 @@ export const CreateForm = () => {
  const router = useRouter();
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
+  defaultValues: {
+   experience: 0,
+  },
  });
 
  async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -110,6 +113,7 @@ export const CreateForm = () => {
         <FormControl>
          <>
           <Slider
+           min={0}
            max={5}
            step={1}
            onValueChange={(value) => field.onChange(value[0])}
