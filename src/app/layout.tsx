@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
 import QueryProvider from "@/components/providers/query-provider";
 import Navbar from "@/components/navbar";
+import { EdgeStoreProvider } from "../lib/edgestore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,7 +32,7 @@ export default function RootLayout({
      >
       <QueryProvider>
        <Navbar />
-       {children}
+       <EdgeStoreProvider>{children}</EdgeStoreProvider>
        <Toaster />
       </QueryProvider>
      </ThemeProvider>

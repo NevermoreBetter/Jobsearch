@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Building, DollarSign, MapPin, Sparkle } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+import { MessageForm } from "./message-form";
 
 interface IData {
  data: {
@@ -20,6 +22,7 @@ interface IData {
 }
 
 const JobDetail = ({ data }: IData) => {
+ const [isPresed, setIsPresed] = useState(false);
  const {
   isLoading,
   data: userData,
@@ -28,8 +31,6 @@ const JobDetail = ({ data }: IData) => {
   queryKey: ["user", data.authorId],
   queryFn: () => fetchUser(data.authorId),
  });
-
- console.log(userData);
 
  if (isLoading) {
   return <div>Loading...</div>;
@@ -56,9 +57,17 @@ const JobDetail = ({ data }: IData) => {
      <p> {userData?.firstName}</p>
      <p> {userData?.lastName}</p>
     </div>
-    <Button variant={"default"} className="mt-5">
-     Apply for this job
-    </Button>
+    {!isPresed ? (
+     <Button
+      variant={"default"}
+      className="mt-5"
+      onClick={() => setIsPresed(true)}
+     >
+      Apply for this job
+     </Button>
+    ) : (
+     <MessageForm userData={userData} />
+    )}
    </div>
    <div className="w-[20%] border border-white p-4 rounded-lg">
     <ul className="flex flex-col gap-3">

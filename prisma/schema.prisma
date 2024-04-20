@@ -29,15 +29,17 @@ model Resume {
 }
 
 model User {
-  id         String   @id @default(cuid())
-  externalId String?   @unique
-  firstName  String?
-  lastName   String?
-  photo      String
-  email      String   @unique
-  resume     Resume?
-  vacancy    Vacancy[]
-  createdAt  DateTime @default(now())
+  id               String    @id @default(cuid())
+  externalId       String?   @unique
+  firstName        String?
+  lastName         String?
+  photo            String
+  email            String    @unique
+  resume           Resume?
+  vacancy          Vacancy[]
+  createdAt        DateTime  @default(now())
+  sentMessages     Message[] @relation("sender")
+  receivedMessages Message[] @relation("receiver")
 }
 
 model Vacancy {
@@ -50,5 +52,18 @@ model Vacancy {
   salary      String
   experience  Int
   author      User     @relation(fields: [authorId], references: [id])
-  authorId    String   
+  authorId    String
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  body      String?
+  resume    String?
+  createdAt DateTime @default(now())
+
+  senderId String
+  sender   User?   @relation(name: "sender", fields: [senderId], references: [id])
+
+  recieverId String
+  reciever   User?   @relation(name: "receiver", fields: [recieverId], references: [id])
 }
