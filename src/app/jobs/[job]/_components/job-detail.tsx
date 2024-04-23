@@ -6,6 +6,7 @@ import { Building, DollarSign, MapPin, Sparkle } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { MessageForm } from "./message-form";
+import { useAuth } from "@clerk/nextjs";
 
 interface IData {
  data: {
@@ -22,7 +23,8 @@ interface IData {
 }
 
 const JobDetail = ({ data }: IData) => {
- const [isPresed, setIsPresed] = useState(false);
+ const [isPressed, setIsPressed] = useState(false);
+ const currentUser = useAuth();
  const {
   isLoading,
   data: userData,
@@ -57,16 +59,24 @@ const JobDetail = ({ data }: IData) => {
      <p> {userData?.firstName}</p>
      <p> {userData?.lastName}</p>
     </div>
-    {!isPresed ? (
-     <Button
-      variant={"default"}
-      className="mt-5"
-      onClick={() => setIsPresed(true)}
-     >
-      Apply for this job
-     </Button>
+    {userData?.externalId === currentUser.userId ? (
+     <p className="mt-4 border border-white p-4 rounded-lg text-center w-[30%] font-bold">
+      Your vacancy
+     </p>
     ) : (
-     <MessageForm userData={userData} />
+     <>
+      {!isPressed ? (
+       <Button
+        variant={"default"}
+        className="mt-5"
+        onClick={() => setIsPressed(true)}
+       >
+        Apply for this job
+       </Button>
+      ) : (
+       <MessageForm userData={userData} />
+      )}
+     </>
     )}
    </div>
    <div className="w-[20%] border border-white p-4 rounded-lg">

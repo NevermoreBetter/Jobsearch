@@ -53,14 +53,14 @@ export const MessageForm = ({ userData }) => {
  };
 
  return (
-  <form onSubmit={handleSubmit}>
+  <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-4">
    <Textarea
     value={body}
     onChange={(e) => setBody(e.target.value)}
     placeholder="Enter your message"
    />
    <Input type="file" onChange={(e) => setResume(e.target.files?.[0])} />
-   <Button type="submit" disabled={isSubmitting}>
+   <Button type="submit" disabled={isSubmitting} className="w-1/5 self-start">
     {isSubmitting ? "Sending..." : "Send Message"}
    </Button>
   </form>

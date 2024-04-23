@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs";
 
 export const fetchUser = async (data: any) => {
  try {
@@ -25,4 +26,29 @@ export const fetchVacancies = async (data: any) => {
 export const deleteVacancy = async (data: any) => {
  const vacancy = await db.vacancy.delete({ where: { id: data } });
  return vacancy;
+};
+
+const getUserById = async () => {
+ const user = await currentUser();
+ const userById = await db.user.findUnique({
+  where: { externalId: user?.id },
+ });
+ return userById;
+};
+
+export const getMessages = async () => {
+ const user = await getUserById();
+ console.log(user);
+ const messages = await db.message.findMany({
+  where: { recieverId: user?.id },
+  orderBy: { createdAt: "desc" },
+ });
+ return messages;
+};
+
+export const getResumeById = async (data: any) => {
+ const resume = await db.resume.findUnique({
+  where: { authorId: data },
+ });
+ return resume;
 };
