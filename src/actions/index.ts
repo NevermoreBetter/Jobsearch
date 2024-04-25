@@ -36,11 +36,19 @@ const getUserById = async () => {
  return userById;
 };
 
-export const getMessages = async () => {
+export const getReceivedMessages = async () => {
  const user = await getUserById();
- console.log(user);
  const messages = await db.message.findMany({
   where: { recieverId: user?.id },
+  orderBy: { createdAt: "desc" },
+ });
+ return messages;
+};
+
+export const getSentMessages = async () => {
+ const user = await getUserById();
+ const messages = await db.message.findMany({
+  where: { senderId: user?.id },
   orderBy: { createdAt: "desc" },
  });
  return messages;

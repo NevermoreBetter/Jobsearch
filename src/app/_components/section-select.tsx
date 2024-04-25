@@ -2,29 +2,39 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-const SectionSelect = () => {
+
+type Props = {
+ first: "profile" | "received";
+ second: "contacts" | "sent";
+};
+
+const SectionSelect = ({ first, second }: Props) => {
  const pathname = usePathname();
  return (
   <div className="my-4">
    <ul className="flex justify-start gap-8 items-center">
-    <Link href={"/my/profile"}>
+    <Link href={first === "profile" ? `/my/${first}` : `/messages/${first}`}>
      <li
       className={cn(
        "bg-gradient-to-r from-gray-700 to-slate-500  bg-clip-text text-transparent text-2xl font-bold",
-       pathname === "/my/profile" && "text-white underline decoration-rose-600"
+       (pathname === `/my/${first}` || pathname === `/messages/${first}`) &&
+        "text-white underline decoration-rose-600"
       )}
      >
-      Profile
+      {first.toUpperCase()}
      </li>
     </Link>
-    <Link href={"/my/contacts"}>
+    <Link
+     href={second === "contacts" ? `/my/${second}` : `/messages/${second}`}
+    >
      <li
       className={cn(
        "bg-gradient-to-r from-gray-700 to-slate-500  bg-clip-text text-transparent text-2xl font-bold",
-       pathname === "/my/contacts" && "text-white underline decoration-rose-600"
+       (pathname === `/my/${second}` || pathname === `/messages/${second}`) &&
+        "text-white underline decoration-rose-600"
       )}
      >
-      Contacts
+      {second.toUpperCase()}
      </li>
     </Link>
    </ul>

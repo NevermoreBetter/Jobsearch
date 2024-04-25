@@ -18,7 +18,7 @@ const Navbar = () => {
     <BriefcaseBusinessIcon />
    </Link>
    <div className="flex justify-between w-[35%]">
-    <Link href="/messages">
+    <Link href="/messages/received">
      <motion.p
       whileHover={{ scale: 1.1, color: "#dda15e" }}
       whileTap={{ scale: 0.9 }}

@@ -18,7 +18,7 @@ export default function ProfileLayout({
 }>) {
  return (
   <>
-   <SectionSelect />
+   <SectionSelect first={"profile"} second={"contacts"} />
    {children}
    <Toaster />
   </>
