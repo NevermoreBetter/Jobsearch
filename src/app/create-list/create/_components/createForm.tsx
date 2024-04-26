@@ -18,6 +18,21 @@ import { toast } from "@/components/ui/use-toast";
 import { Slider } from "@/components/ui/slider";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import Select from "react-select";
+
+const locationOptions = [
+ { value: "Kyiv", label: "Kyiv" },
+ { value: "Lviv", label: "Lviv" },
+ { value: "Mykolaiv", label: "Mykolaiv" },
+ { value: "Kharkiv", label: "Kharkiv" },
+ { value: "Dnipro", label: "Dnipro" },
+ { value: "Zaporizhzhya", label: "Zaporizhzhya" },
+ { value: "Odessa", label: "Odessa" },
+ { value: "Poltava", label: "Poltava" },
+ { value: "Kherson", label: "Kherson" },
+ { value: "Ternopil", label: "Ternopil" },
+ // Add more locations as needed
+];
 
 const FormSchema = z.object({
  id: z.string().optional(),
@@ -25,7 +40,7 @@ const FormSchema = z.object({
   message: "Position must be at least 2 characters.",
  }),
  description: z.string(),
- locations: z.string(),
+ locations: z.string().array(),
  type: z.string(),
  salary: z.string(),
  experience: z.number(),
@@ -37,7 +52,7 @@ interface IProps {
   position: string;
   experience: number;
   salary: string;
-  location: string;
+  location: string[];
   description: string;
   type: string;
  } | null;
@@ -72,10 +87,7 @@ export const CreateForm = () => {
 
  return (
   <Form {...form}>
-   <form
-    onSubmit={form.handleSubmit(onSubmit)}
-    className="w-[80%] space-y-6"
-   >
+   <form onSubmit={form.handleSubmit(onSubmit)} className="w-[80%] space-y-6">
     <FormField
      control={form.control}
      name="title"
@@ -145,7 +157,23 @@ export const CreateForm = () => {
        <FormLabel>Locations</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input placeholder="Office locations" {...field} />
+         <Select
+          className="text-black "
+          options={locationOptions}
+          styles={{
+           control: (base, state) => ({
+            ...base,
+            backgroundColor: "222.2 84% 4.9%",
+            border: "1px solid hsl(217.2 32.6% 17.5%)",
+            outline: state.isFocused && "2px solid hsl(212.7 26.8% 83.9%)",
+           }),
+           option: (base) => ({ ...base, backgroundColor: "222.2 84% 4.9%" }),
+          }}
+          isMulti
+          onChange={(selectedOptions) =>
+           field.onChange(selectedOptions.map((option) => option.value))
+          }
+         />
         </FormControl>
         <FormMessage />
        </div>
@@ -170,6 +198,7 @@ export const CreateForm = () => {
       </FormItem>
      )}
     />
+
     <FormField
      control={form.control}
      name="type"
@@ -190,3 +219,5 @@ export const CreateForm = () => {
   </Form>
  );
 };
+
+//! Должен быть селект

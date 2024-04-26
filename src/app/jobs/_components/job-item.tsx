@@ -9,7 +9,7 @@ interface IJob {
   id: string;
   title: string;
   description: string;
-  locations: string;
+  locations: string[];
   type: string;
   createdAt: string;
   authorId: string;
@@ -74,7 +74,12 @@ const JobItem = ({ job }: IJob) => {
     </p>
     <p className="flex items-center gap-2">
      <MapPin className="size-4" />
-     {job.locations}
+     {job.locations.map((location, index) => (
+      <span key={location}>
+       {location}
+       {index !== job.locations.length - 1 ? "," : ""}
+      </span>
+     ))}
     </p>
    </div>
    <p className="line-clamp-3 text-wrap">{job.description}</p>

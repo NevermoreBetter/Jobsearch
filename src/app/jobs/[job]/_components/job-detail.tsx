@@ -89,9 +89,14 @@ const JobDetail = ({ data }: IData) => {
       <Sparkle />
       {data.experience} year(s) of experience
      </li>
-     <li className="flex gap-2">
+     <li className="flex flex-wrap">
       <MapPin />
-      {data.locations}
+      {data.locations.map((location, index) => (
+       <span key={location} className="mr-1">
+        {location}
+        {index !== data.locations.length - 1 ? "," : ""}
+       </span>
+      ))}
      </li>
      <li className="flex gap-2">
       <Building /> {data.type}

@@ -35,7 +35,7 @@ const CreateListPage = async () => {
  return (
   <div className="flex w-1/2 flex-col justify-center items-center mt-5 mx-auto">
    <Link href="/create-list/create">
-    <Button variant="link" className="mb-5">
+    <Button variant="link" className="mb-5 text-2xl font-bold">
      Create Vacancy
     </Button>
    </Link>

@@ -47,7 +47,7 @@ model Vacancy {
   title       String
   description String
   createdAt   DateTime @default(now())
-  locations   String
+  locations   String[]
   type        String
   salary      String
   experience  Int

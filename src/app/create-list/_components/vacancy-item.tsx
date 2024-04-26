@@ -27,7 +27,7 @@ interface VacancyItemProps {
  vacancy: {
   id: string;
   title: string;
-  locations: string;
+  locations: string[];
   salary: string;
   type: string;
   experience: number;
@@ -46,14 +46,19 @@ const VacancyItem = ({ vacancy }: VacancyItemProps) => {
    <Link href={`/create-list/${vacancy.title}`} className="w-[80%]">
     <h2 className="text-2xl font-bold mb-2 text-center">{vacancy.title}</h2>
    </Link>
-   <div className="flex justify-between mb-2 w-[70%]">
-    <p className="flex">
+   <div className="flex justify-between mb-2 w-[90%]">
+    <div className="w-1/4  flex flex-wrap overflow-hidden line-clamp-2">
      <MapPin className="mr-1" />
-     {vacancy.locations}
-    </p>
+     {vacancy.locations.map((location, index) => (
+      <span key={location} className="mr-1">
+       {location}
+       {index !== vacancy.locations.length - 1 ? "," : ""}
+      </span>
+     ))}
+    </div>
     <p className="flex">
      <DollarSign className="mr-1" />
-     {vacancy.salary}
+     {vacancy.salary}$
     </p>
     <p className="flex">
      <Building className="mr-1" /> {vacancy.type}
