@@ -18,6 +18,27 @@ import { Slider } from "@/components/ui/slider";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { useMutation } from "@tanstack/react-query";
+import Select from "react-select";
+import {
+ SelectContent,
+ SelectItem,
+ SelectTrigger,
+ SelectValue,
+ Select as SingleSelect,
+} from "@/components/ui/select";
+
+const locationOptions = [
+ { value: "Kyiv", label: "Kyiv" },
+ { value: "Lviv", label: "Lviv" },
+ { value: "Mykolaiv", label: "Mykolaiv" },
+ { value: "Kharkiv", label: "Kharkiv" },
+ { value: "Dnipro", label: "Dnipro" },
+ { value: "Zaporizhzhya", label: "Zaporizhzhya" },
+ { value: "Odessa", label: "Odessa" },
+ { value: "Poltava", label: "Poltava" },
+ { value: "Kherson", label: "Kherson" },
+ { value: "Ternopil", label: "Ternopil" },
+];
 
 const FormSchema = z.object({
  id: z.string().optional(),
@@ -25,7 +46,7 @@ const FormSchema = z.object({
   message: "Position must be at least 2 characters.",
  }),
  description: z.string(),
- locations: z.string(),
+ locations: z.string().array(),
  type: z.string(),
  salary: z.string(),
  experience: z.number(),
@@ -37,7 +58,7 @@ interface IProps {
   title: string;
   description: string;
   createdAt: Date;
-  locations: string;
+  locations: string[];
   type: string;
   salary: string;
   experience: number;
@@ -73,6 +94,11 @@ const EditForm = ({ vacancy }: IProps) => {
   router.push("/create-list");
   router.refresh();
  }
+
+ const defaultValues = vacancy.locations.map((option) => ({
+  value: option,
+  label: option,
+ }));
 
  return (
   <Form {...form}>
@@ -150,7 +176,24 @@ const EditForm = ({ vacancy }: IProps) => {
        <FormLabel>Locations</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input placeholder="Office locations" {...field} />
+         <Select
+          className="text-black "
+          defaultValue={defaultValues}
+          options={locationOptions}
+          styles={{
+           control: (base, state) => ({
+            ...base,
+            backgroundColor: "222.2 84% 4.9%",
+            border: "1px solid hsl(200 9% 23%)",
+            outline: state.isFocused && "2px solid hsl(212.7 26.8% 83.9%)",
+           }),
+           option: (base) => ({ ...base, backgroundColor: "222.2 84% 4.9%" }),
+          }}
+          isMulti
+          onChange={(selectedOptions) =>
+           field.onChange(selectedOptions.map((option) => option.value))
+          }
+         />
         </FormControl>
         <FormMessage />
        </div>
@@ -182,12 +225,19 @@ const EditForm = ({ vacancy }: IProps) => {
      render={({ field }) => (
       <FormItem>
        <FormLabel>Employment type</FormLabel>
-       <div className="flex flex-col w-[70%] justify-between">
+       <SingleSelect onValueChange={field.onChange} defaultValue={field.value}>
         <FormControl>
-         <Input placeholder="Type" {...field} />
+         <SelectTrigger className="w-[70%]">
+          <SelectValue placeholder="Select type of work" />
+         </SelectTrigger>
         </FormControl>
-        <FormMessage />
-       </div>
+        <SelectContent>
+         <SelectItem value="Remote">Remote</SelectItem>
+         <SelectItem value="On Site">On Site</SelectItem>
+         <SelectItem value="Hybrid">Hybrid</SelectItem>
+        </SelectContent>
+       </SingleSelect>
+       <FormMessage />
       </FormItem>
      )}
     />

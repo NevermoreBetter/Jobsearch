@@ -9,8 +9,10 @@ const EditPage = async (props: { params: { name: string } }) => {
   where: { externalId: user?.id },
  });
  if (dbUser) {
-  vacancy = await db.vacancy.findFirst({ where: { title: props.params.name } });
+  vacancy = await db.vacancy.findFirst({ where: { id: props.params.name } });
  }
+ console.log(props.params.name);
+ console.log(vacancy);
 
  return (
   <div className="flex justify-center items-center mt-5">

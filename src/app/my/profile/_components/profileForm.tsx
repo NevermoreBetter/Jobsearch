@@ -17,6 +17,28 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Slider } from "@/components/ui/slider";
 import { useMutation } from "@tanstack/react-query";
+import { Textarea } from "@/components/ui/textarea";
+import {
+ SelectContent,
+ SelectItem,
+ SelectTrigger,
+ SelectValue,
+ Select as SingleSelect,
+} from "@/components/ui/select";
+import Select from "react-select";
+
+const locationOptions = [
+ { value: "Kyiv", label: "Kyiv" },
+ { value: "Lviv", label: "Lviv" },
+ { value: "Mykolaiv", label: "Mykolaiv" },
+ { value: "Kharkiv", label: "Kharkiv" },
+ { value: "Dnipro", label: "Dnipro" },
+ { value: "Zaporizhzhya", label: "Zaporizhzhya" },
+ { value: "Odessa", label: "Odessa" },
+ { value: "Poltava", label: "Poltava" },
+ { value: "Kherson", label: "Kherson" },
+ { value: "Ternopil", label: "Ternopil" },
+];
 
 const FormSchema = z.object({
  id: z.string().optional(),
@@ -34,7 +56,7 @@ const FormSchema = z.object({
   .max(250, {
    message: "Description must be at most 250 characters.",
   }),
- type: z.string(),
+ type: z.string().array(),
 });
 
 interface IProps {
@@ -45,7 +67,7 @@ interface IProps {
   salary: string;
   location: string;
   description: string;
-  type: string;
+  type: string[];
  } | null;
 }
 
@@ -67,7 +89,7 @@ export const ProfileForm = ({ resume }: IProps) => {
    salary: !!resume ? resume.salary : "",
    location: !!resume ? resume.location : "",
    description: !!resume ? resume.description : "",
-   type: !!resume ? resume.type : "",
+   type: !!resume ? resume.type : [],
   },
  });
 
@@ -90,6 +112,11 @@ export const ProfileForm = ({ resume }: IProps) => {
    console.log(error);
   }
  }
+
+ const defaultValues = resume.type.map((option) => ({
+  value: option,
+  label: option,
+ }));
 
  return (
   <Form {...form}>
@@ -173,17 +200,22 @@ export const ProfileForm = ({ resume }: IProps) => {
      name="location"
      render={({ field }) => (
       <FormItem>
-       <FormLabel>Location</FormLabel>
-       <div className="flex flex-col w-[70%] justify-between">
+       <FormLabel>Your city</FormLabel>
+       <SingleSelect onValueChange={field.onChange} defaultValue={field.value}>
         <FormControl>
-         <Input
-          defaultValue={!!resume ? resume.location : ""}
-          placeholder="Where do you live?"
-          {...field}
-         />
+         <SelectTrigger className="w-[70%]">
+          <SelectValue placeholder="Select city" />
+         </SelectTrigger>
         </FormControl>
-        <FormMessage />
-       </div>
+        <SelectContent>
+         {locationOptions.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+           {option.label}
+          </SelectItem>
+         ))}
+        </SelectContent>
+       </SingleSelect>
+       <FormMessage />
       </FormItem>
      )}
     />
@@ -195,7 +227,7 @@ export const ProfileForm = ({ resume }: IProps) => {
        <FormLabel>Description</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input
+         <Textarea
           defaultValue={!!resume ? resume.description : ""}
           placeholder="Write a brief description of yourself."
           {...field}
@@ -214,10 +246,28 @@ export const ProfileForm = ({ resume }: IProps) => {
        <FormLabel>Employment type</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input
-          defaultValue={!!resume ? resume.type : ""}
-          placeholder="Type"
-          {...field}
+         <Select
+          className="text-black "
+          defaultValue={defaultValues}
+          options={[
+           { value: "On Site", label: "On Site" },
+           { value: "Remote", label: "Remote" },
+           { value: "Hybrid", label: "Hybrid" },
+          ]}
+          styles={{
+           control: (base, state) => ({
+            ...base,
+            backgroundColor: "222.2 84% 4.9%",
+            border: "1px solid hsl(200 9% 23%)",
+            outline: state.isFocused && "2px solid hsl(212.7 26.8% 83.9%)",
+           }),
+           option: (base) => ({ ...base, backgroundColor: "222.2 84% 4.9%" }),
+          }}
+          isMulti
+          onChange={(selectedOptions) => {
+           field.onChange(selectedOptions.map((option) => option.value));
+           console.log(selectedOptions.map((option) => option.value));
+          }}
          />
         </FormControl>
         <FormMessage />

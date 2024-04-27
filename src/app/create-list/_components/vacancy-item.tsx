@@ -71,7 +71,7 @@ const VacancyItem = ({ vacancy }: VacancyItemProps) => {
    <p className="self-start">{vacancy.description}</p>
    <div className="self-end">
     <Button variant={"ghost"}>
-     <Link href={`/create-list/edit/${vacancy.title}`}>
+     <Link href={`/create-list/edit/${vacancy.id}`}>
       <Pen />
      </Link>
     </Button>

@@ -16,7 +16,7 @@ datasource db {
 
 model Resume {
   id          String   @id @default(cuid())
-  type        String
+  type        String[]
   position    String
   experience  Int
   salary      String

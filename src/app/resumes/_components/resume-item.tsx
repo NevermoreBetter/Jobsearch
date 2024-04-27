@@ -9,7 +9,7 @@ interface IResume {
   position: string;
   experience: number;
   location: string;
-  type: string;
+  type: string[];
   createdAt: string;
   description: string;
   salary: string;
@@ -71,7 +71,13 @@ const ResumeItem = ({ resume }: IResume) => {
    <p className="text-2xl font-bold text-white">{resume.position}</p>
    <div className="flex justify-start items-center gap-4">
     <p className="flex items-center gap-2">
-     <Building className="size-4" /> {resume.type}
+     <Building className="size-4" />
+     {resume.type.map((type, index) => (
+      <span key={type}>
+       {type}
+       {index !== resume.type.length - 1 ? "," : ""}
+      </span>
+     ))}
     </p>
     <p className="flex items-center gap-2">
      <MapPin className="size-4" />

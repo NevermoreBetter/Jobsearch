@@ -19,6 +19,13 @@ import { Slider } from "@/components/ui/slider";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import Select from "react-select";
+import {
+ SelectContent,
+ SelectItem,
+ SelectTrigger,
+ SelectValue,
+ Select as SingleSelect,
+} from "@/components/ui/select";
 
 const locationOptions = [
  { value: "Kyiv", label: "Kyiv" },
@@ -164,7 +171,7 @@ export const CreateForm = () => {
            control: (base, state) => ({
             ...base,
             backgroundColor: "222.2 84% 4.9%",
-            border: "1px solid hsl(217.2 32.6% 17.5%)",
+            border: "1px solid hsl(200 9% 23%)",
             outline: state.isFocused && "2px solid hsl(212.7 26.8% 83.9%)",
            }),
            option: (base) => ({ ...base, backgroundColor: "222.2 84% 4.9%" }),
@@ -198,19 +205,25 @@ export const CreateForm = () => {
       </FormItem>
      )}
     />
-
     <FormField
      control={form.control}
      name="type"
      render={({ field }) => (
-      <FormItem>
+      <FormItem className="">
        <FormLabel>Employment type</FormLabel>
-       <div className="flex flex-col w-[70%] justify-between">
+       <SingleSelect onValueChange={field.onChange} defaultValue={field.value}>
         <FormControl>
-         <Input placeholder="Type" {...field} />
+         <SelectTrigger className="w-[70%]">
+          <SelectValue placeholder="Select type of work" />
+         </SelectTrigger>
         </FormControl>
-        <FormMessage />
-       </div>
+        <SelectContent>
+         <SelectItem value="Remote">Remote</SelectItem>
+         <SelectItem value="On Site">On Site</SelectItem>
+         <SelectItem value="Hybrid">Hybrid</SelectItem>
+        </SelectContent>
+       </SingleSelect>
+       <FormMessage />
       </FormItem>
      )}
     />
@@ -219,5 +232,3 @@ export const CreateForm = () => {
   </Form>
  );
 };
-
-//! Должен быть селект
