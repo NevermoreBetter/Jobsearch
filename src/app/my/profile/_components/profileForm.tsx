@@ -154,6 +154,7 @@ export const ProfileForm = ({ resume }: IProps) => {
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
          <Input
+          type="number"
           defaultValue={!!resume ? resume.salary : ""}
           placeholder="Your monthly salary in USD"
           {...field}

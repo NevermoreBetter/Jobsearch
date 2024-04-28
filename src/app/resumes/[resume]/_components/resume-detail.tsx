@@ -6,13 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 import { MessageForm } from "./message-form";
+import { Building, DollarSign, MapPin, Sparkle } from "lucide-react";
 
 interface IData {
  data: {
   title: string;
   description: string;
   location: string;
-  type: string;
+  type: string[];
   id: string;
   authorId: string;
   cratedAt: string;
@@ -79,10 +80,29 @@ const ResumeDetail = ({ data }: IData) => {
     )}
    </div>
    <div className="w-[20%] border border-white p-4 rounded-lg">
-    <p>{data.salary}</p>
-    <p>{data.experience}</p>
-    <ul className="flex gap-2">{data.location}</ul>
-    <p> {data.type}</p>
+    <ul className="flex flex-col gap-3">
+     <p className="flex gap-2">
+      <DollarSign />
+      {data.salary}$
+     </p>
+     <p className="flex gap-2">
+      <Sparkle />
+      {data.experience} year(s) of experience
+     </p>
+     <ul className="flex gap-2">
+      <MapPin />
+      {data.location}
+     </ul>
+     <div className="flex gap-2">
+      <Building />
+      {data.type.map((type, index) => (
+       <span key={type}>
+        {type}
+        {index !== data.type.length - 1 ? ", " : ""}
+       </span>
+      ))}
+     </div>
+    </ul>
    </div>
   </div>
  );

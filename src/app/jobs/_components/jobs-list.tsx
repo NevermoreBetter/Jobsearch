@@ -18,6 +18,7 @@ interface IJob {
 
 const JobsList = () => {
  const [itemOffset, setItemOffset] = useState(0);
+
  let endOffset, currentItems, pageCount;
  const jobsPerPage = 5;
  const { isPending, data: jobs } = useQuery({
@@ -66,7 +67,7 @@ const JobsList = () => {
  };
 
  return (
-  <div className="w-[70%] flex flex-col gap-4 py-4 justify-center">
+  <div className="w-full flex flex-col gap-4 py-4 justify-center">
    {currentItems.map((job: IJob) => (
     <Link href={`/jobs/${job.title}`} key={job.id}>
      <JobItem job={job} />

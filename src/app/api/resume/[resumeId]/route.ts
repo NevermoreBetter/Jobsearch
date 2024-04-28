@@ -11,8 +11,9 @@ export async function GET(req: Request, context: ContextProps) {
  try {
   const { params } = context;
   const resume = await db.resume.findFirst({
-   where: { position: params.resumeTitle },
+   where: { position: params.resumeId },
   });
+  console.log(params);
   return NextResponse.json(resume, { status: 200 });
  } catch (error) {
   return NextResponse.json(

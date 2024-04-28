@@ -83,7 +83,7 @@ const JobDetail = ({ data }: IData) => {
     <ul className="flex flex-col gap-3">
      <li className="flex gap-2">
       <DollarSign />
-      {data.salary}
+      {data.salary}$
      </li>
      <li className="flex gap-2">
       <Sparkle />

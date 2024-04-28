@@ -6,7 +6,6 @@ import JobsList from "./_components/jobs-list";
 const JobsPage = () => {
  return (
   <div className="flex">
-   <JobsSidebar />
    <JobsList />
   </div>
  );

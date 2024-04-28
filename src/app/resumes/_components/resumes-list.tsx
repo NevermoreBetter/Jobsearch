@@ -5,6 +5,7 @@ import axios from "axios";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import Link from "next/link";
+import FilterComponent from "./filter-component";
 
 interface IResume {
  id: string;
@@ -20,6 +21,7 @@ interface IResume {
 
 const ResumesList = () => {
  const [itemOffset, setItemOffset] = useState(0);
+
  let endOffset, currentItems, pageCount;
  const resumesPerPage = 5;
  const { isPending, data: resumes } = useQuery({
@@ -69,7 +71,7 @@ const ResumesList = () => {
  };
 
  return (
-  <div className="w-[70%] flex flex-col gap-4 py-4 justify-center">
+  <div className="w-full flex flex-col gap-4 py-4 justify-center">
    {currentItems.map((resume: IResume) => (
     <Link href={`/resumes/${resume.position}`} key={resume.id}>
      <ResumeItem resume={resume} />
