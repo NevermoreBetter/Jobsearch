@@ -20,7 +20,7 @@ const ReceivedMessage = ({ message }) => {
    {message.resume === null ? (
     ""
    ) : (
-    <a href={message.resume} className="flex items-center gap-2">
+    <a href={message.resume} className="flex w-fit items-center gap-2">
      <FileText />
      Resume
     </a>

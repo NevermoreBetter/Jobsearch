@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { MessageForm } from "./message-form";
 import { useAuth } from "@clerk/nextjs";
+import Link from "next/link";
 
 interface IData {
  data: {
@@ -47,7 +48,10 @@ const JobDetail = ({ data }: IData) => {
    <div className="w-[60%]">
     <h1 className="text-3xl font-bold mb-5"> {data.title}</h1>
     <p className="text-lg mb-5"> {data.description}</p>
-    <div className="flex items-center gap-2">
+    <Link
+     href={`/user/${userData?.id}`}
+     className="flex w-fit items-center gap-2"
+    >
      <Image
       src={userData.photo}
       width={35}
@@ -58,7 +62,7 @@ const JobDetail = ({ data }: IData) => {
 
      <p> {userData?.firstName}</p>
      <p> {userData?.lastName}</p>
-    </div>
+    </Link>
     {userData?.externalId === currentUser.userId ? (
      <p className="mt-4 border border-white p-4 rounded-lg text-center w-[30%] font-bold">
       Your vacancy

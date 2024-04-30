@@ -67,6 +67,7 @@ const JobItem = ({ job }: IJob) => {
     <p>{user.firstName}</p>
     <p>{user.lastName}</p>
    </div>
+
    <p className="text-2xl font-bold text-white">{job.title}</p>
    <div className="flex justify-start items-center gap-4">
     <p className="flex items-center gap-2">

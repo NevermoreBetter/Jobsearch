@@ -40,6 +40,13 @@ const Item = ({
      backgroundColor: color,
      top: `calc(-10% + ${i * 25}px)`,
     }}
+    initial={{ y: 300, opacity: 0 }}
+    animate={{
+     y: 0,
+     opacity: 1,
+     transition: { duration: 1, type: "spring", stiffness: 100 },
+    }}
+    exit={{ y: -300, opacity: 0 }}
    >
     <div className="w-2/3 flex flex-col gap-2 justify-center items-start">
      <h1 className="font-bold text-2xl">{title}</h1>
