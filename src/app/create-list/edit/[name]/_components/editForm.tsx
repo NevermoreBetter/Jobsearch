@@ -26,6 +26,7 @@ import {
  SelectValue,
  Select as SingleSelect,
 } from "@/components/ui/select";
+import { toast } from "@/components/ui/use-toast";
 
 const locationOptions = [
  { value: "Kyiv", label: "Kyiv" },
@@ -88,7 +89,9 @@ const EditForm = ({ vacancy }: IProps) => {
    return axios.patch(`/api/vacancy/${vacancy!.id}`, editedVacancy);
   },
   onSuccess: () => {
-   alert("success");
+   toast.success("Vacancy edited successfully");
+   router.push("/create-list");
+   router.refresh();
   },
  });
 
