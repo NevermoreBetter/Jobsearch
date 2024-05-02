@@ -35,13 +35,16 @@ const FormSchema = z.object({
 });
 
 interface IProps {
- user?: {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  photo: string;
- };
+ user?:
+  | {
+     id: string;
+     firstName: string;
+     lastName: string;
+     email: string;
+     photo: string;
+    }
+  | null
+  | undefined;
 }
 
 export const ContactForm = ({ user }: IProps) => {

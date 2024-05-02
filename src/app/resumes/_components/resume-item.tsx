@@ -17,8 +17,18 @@ interface IResume {
  };
 }
 
+interface IUser {
+ id: string;
+ externalId: string | null;
+ firstName: string | null;
+ lastName: string | null;
+ photo: string;
+ email: string;
+ createdAt: Date;
+}
+
 const ResumeItem = ({ resume }: IResume) => {
- const [user, setUser] = useState(null);
+ const [user, setUser] = useState<IUser | null>(null);
 
  useEffect(() => {
   const getUser = async () => {
@@ -60,7 +70,7 @@ const ResumeItem = ({ resume }: IResume) => {
    <div className="flex justify-start items-center gap-2 text-sm">
     <Image
      src={user.photo}
-     alt={user.firstName}
+     alt={"photo"}
      width={30}
      height={30}
      className="rounded-full"
