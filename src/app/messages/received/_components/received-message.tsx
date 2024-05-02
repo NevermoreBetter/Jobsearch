@@ -1,7 +1,38 @@
 import { FileText } from "lucide-react";
 import Link from "next/link";
 
-const ReceivedMessage = ({ message }) => {
+interface IMessage {
+ message: {
+  id: string;
+  body: string | null;
+  resume: string | null;
+  createdAt: Date;
+  senderId: string;
+  recieverId: string;
+  resumeLink: {
+   position: string;
+   type: string[];
+   experience: number;
+   location: string;
+   description: string;
+   id: string;
+   salary: string;
+   createdAt: Date;
+   published: boolean;
+  } | null;
+  sender: {
+   id: string;
+   externalId: string | null;
+   firstName: string | null;
+   lastName: string | null;
+   photo: string;
+   email: string;
+   createdAt: Date;
+  } | null;
+ };
+}
+
+const ReceivedMessage = ({ message }: IMessage) => {
  return (
   <>
    <Link

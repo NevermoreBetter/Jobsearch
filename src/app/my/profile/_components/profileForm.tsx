@@ -60,15 +60,18 @@ const FormSchema = z.object({
 });
 
 interface IProps {
- resume: {
-  id: string;
-  position: string;
-  experience: number;
-  salary: string;
-  location: string;
-  description: string;
-  type: string[];
- } | null;
+ resume:
+  | {
+     id: string;
+     position: string;
+     experience: number;
+     salary: string;
+     location: string;
+     description: string;
+     type: string[];
+    }
+  | null
+  | undefined;
 }
 
 export const ProfileForm = ({ resume }: IProps) => {
@@ -113,7 +116,7 @@ export const ProfileForm = ({ resume }: IProps) => {
   }
  }
 
- const defaultValues = resume.type.map((option) => ({
+ const defaultValues = resume?.type.map((option) => ({
   value: option,
   label: option,
  }));
@@ -260,7 +263,9 @@ export const ProfileForm = ({ resume }: IProps) => {
             ...base,
             backgroundColor: "222.2 84% 4.9%",
             border: "1px solid hsl(200 9% 23%)",
-            outline: state.isFocused && "2px solid hsl(212.7 26.8% 83.9%)",
+            outline: state.isFocused
+             ? "2px solid hsl(212.7 26.8% 83.9%)"
+             : undefined,
            }),
            option: (base) => ({ ...base, backgroundColor: "222.2 84% 4.9%" }),
           }}

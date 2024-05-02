@@ -8,14 +8,32 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { useEdgeStore } from "@/lib/edgestore";
 
-export const MessageForm = ({ userData }) => {
- const { id } = userData;
+interface IUser {
+ userData:
+  | {
+     id: string;
+     externalId: string | null;
+     firstName: string | null;
+     lastName: string | null;
+     photo: string;
+     email: string;
+     createdAt: Date;
+    }
+  | undefined
+  | null;
+}
+
+export const MessageForm = ({ userData }: IUser) => {
  const [body, setBody] = useState("");
  const [resume, setResume] = useState<File>();
  const [isSubmitting, setIsSubmitting] = useState(false);
  const { edgestore } = useEdgeStore();
+ if (!userData) {
+  return <div>No user data available</div>;
+ }
+ const { id } = userData;
 
- const handleSubmit = async (e) => {
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   setIsSubmitting(true);
 

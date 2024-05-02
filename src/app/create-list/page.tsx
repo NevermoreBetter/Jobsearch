@@ -1,29 +1,9 @@
-import { deleteVacancy, fetchVacancies } from "@/actions";
-import {
- AlertDialogAction,
- AlertDialog,
- AlertDialogTrigger,
- AlertDialogCancel,
- AlertDialogContent,
- AlertDialogDescription,
- AlertDialogFooter,
- AlertDialogHeader,
- AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+import { fetchVacancies } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs";
-import {
- Building,
- DollarSign,
- MapPin,
- Pen,
- Sparkle,
- Trash,
-} from "lucide-react";
 import Link from "next/link";
 import VacancyItem from "./_components/vacancy-item";
-import { revalidatePath } from "next/cache";
 
 const CreateListPage = async () => {
  const user = await currentUser();

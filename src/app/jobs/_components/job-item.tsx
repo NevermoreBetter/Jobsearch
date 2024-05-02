@@ -1,6 +1,6 @@
 "use client";
 import { fetchUser } from "@/actions";
-import { Building, MapPin } from "lucide-react";
+import { Banknote, Building, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -10,14 +10,25 @@ interface IJob {
   title: string;
   description: string;
   locations: string[];
+  salary: string;
   type: string;
   createdAt: string;
   authorId: string;
  };
 }
 
+interface IUser {
+ id: string;
+ externalId: string | null;
+ firstName: string | null;
+ lastName: string | null;
+ photo: string;
+ email: string;
+ createdAt: Date;
+}
+
 const JobItem = ({ job }: IJob) => {
- const [user, setUser] = useState(null);
+ const [user, setUser] = useState<IUser | null>(null);
 
  useEffect(() => {
   const getUser = async () => {
@@ -59,7 +70,7 @@ const JobItem = ({ job }: IJob) => {
    <div className="flex justify-start items-center gap-2 text-sm">
     <Image
      src={user.photo}
-     alt={user.firstName}
+     alt="photo"
      width={30}
      height={30}
      className="rounded-full"
@@ -81,6 +92,10 @@ const JobItem = ({ job }: IJob) => {
        {index !== job.locations.length - 1 ? "," : ""}
       </span>
      ))}
+    </p>
+    <p className="flex items-center gap-2">
+     <Banknote />
+     {job.salary} $
     </p>
    </div>
    <p className="line-clamp-3 text-wrap">{job.description}</p>

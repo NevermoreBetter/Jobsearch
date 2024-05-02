@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 import { MessageForm } from "./message-form";
-import { Building, DollarSign, MapPin, Sparkle } from "lucide-react";
+import { Banknote, Building, MapPin, Sparkle } from "lucide-react";
 
 interface IData {
  data: {
@@ -82,7 +82,7 @@ const ResumeDetail = ({ data }: IData) => {
    <div className="w-[20%] border border-white p-4 rounded-lg">
     <ul className="flex flex-col gap-3">
      <p className="flex gap-2">
-      <DollarSign />
+      <Banknote />
       {data.salary}$
      </p>
      <p className="flex gap-2">

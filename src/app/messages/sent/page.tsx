@@ -5,14 +5,20 @@ const SentPage = async () => {
  const sentMessages = await getSentMessagesWithUsers();
  return (
   <div>
-   {sentMessages.map((message) => (
-    <div
-     key={message.id}
-     className="border rounded-xl flex flex-col p-4 gap-4 my-4"
-    >
-     <SentMessage message={message} />
+   {sentMessages.length > 1 ? (
+    <div>
+     {sentMessages.map((message) => (
+      <div
+       key={message.id}
+       className="border rounded-xl flex flex-col p-4 gap-4 my-4"
+      >
+       <SentMessage message={message} />
+      </div>
+     ))}
     </div>
-   ))}
+   ) : (
+    "No Messages"
+   )}
   </div>
  );
 };

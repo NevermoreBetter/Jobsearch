@@ -2,7 +2,7 @@
 import { fetchUser } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { Building, DollarSign, MapPin, Sparkle } from "lucide-react";
+import { Banknote, Building, MapPin, Sparkle } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { MessageForm } from "./message-form";
@@ -53,7 +53,7 @@ const JobDetail = ({ data }: IData) => {
      className="flex w-fit items-center gap-2"
     >
      <Image
-      src={userData.photo}
+      src={userData!.photo}
       width={35}
       height={35}
       alt="user"
@@ -86,7 +86,7 @@ const JobDetail = ({ data }: IData) => {
    <div className="w-[20%] border border-white p-4 rounded-lg">
     <ul className="flex flex-col gap-3">
      <li className="flex gap-2">
-      <DollarSign />
+      <Banknote />
       {data.salary}$
      </li>
      <li className="flex gap-2">

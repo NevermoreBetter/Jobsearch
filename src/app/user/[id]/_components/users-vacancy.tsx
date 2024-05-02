@@ -1,6 +1,20 @@
-import { Building, MapPin } from "lucide-react";
+import { Banknote, Building, MapPin } from "lucide-react";
 
-const UsersVacancy = ({ vacancy }) => {
+interface IVacancy {
+ vacancy: {
+  id: string;
+  title: string;
+  description: string;
+  createdAt: Date;
+  locations: string[];
+  type: string;
+  salary: string;
+  experience: number;
+  authorId: string;
+ };
+}
+
+const UsersVacancy = ({ vacancy }: IVacancy) => {
  if (!vacancy) {
   return (
    <div className="flex justify-center items-center h-[250px] w-full text-white">
@@ -28,7 +42,7 @@ const UsersVacancy = ({ vacancy }) => {
  }
 
  return (
-  <div>
+  <div className="w-full h-[250px] flex flex-col gap-3 justify-start items-start bg-gray-500 px-8 py-5 rounded-lg mb-5 animate-fade-in">
    <p className="text-2xl font-bold text-white">{vacancy.title}</p>
    <div className="flex justify-start items-center gap-4">
     <p className="flex items-center gap-2">
@@ -36,12 +50,16 @@ const UsersVacancy = ({ vacancy }) => {
     </p>
     <p className="flex items-center gap-2">
      <MapPin className="size-4" />
-     {vacancy.locations.map((location, index) => (
+     {vacancy.locations.map((location: string, index: number) => (
       <span key={location}>
        {location}
        {index !== vacancy.locations.length - 1 ? "," : ""}
       </span>
      ))}
+    </p>
+    <p className="flex items-center gap-2">
+     <Banknote />
+     {vacancy.salary} $
     </p>
    </div>
    <p className="line-clamp-3 text-wrap">{vacancy.description}</p>

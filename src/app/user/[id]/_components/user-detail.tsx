@@ -2,7 +2,34 @@ import { Mail } from "lucide-react";
 import Image from "next/image";
 import UsersVacancy from "./users-vacancy";
 
-const UserDetail = ({ user, vacancies }) => {
+interface IUser {
+ id: string;
+ externalId: string | null;
+ firstName: string | null;
+ lastName: string | null;
+ photo: string;
+ email: string;
+ createdAt: Date;
+}
+
+interface IVacancy {
+ id: string;
+ title: string;
+ description: string;
+ createdAt: Date;
+ locations: string[];
+ type: string;
+ salary: string;
+ experience: number;
+ authorId: string;
+}
+
+interface IUserDetail {
+ user: IUser | null;
+ vacancies: IVacancy[] | null;
+}
+
+const UserDetail = ({ user, vacancies }: IUserDetail) => {
  if (!user || !vacancies) {
   return (
    <div className="flex justify-center items-center h-[250px] w-full text-white">
@@ -29,12 +56,12 @@ const UserDetail = ({ user, vacancies }) => {
   );
  }
  return (
-  <div className="flex justify-around">
+  <div className="flex justify-around mt-5">
    <div className="flex flex-col gap-2">
     <div className="flex justify-start items-center w-fit gap-2 text-white">
      <Image
       src={user.photo}
-      alt={user.name}
+      alt={"photo"}
       width={30}
       height={30}
       className="rounded-full"
@@ -45,7 +72,7 @@ const UserDetail = ({ user, vacancies }) => {
     <p>Active vacancies: {vacancies.length}</p>
     <a
      href={`mailto:${user.email}`}
-     className="flex justify-start items-center gap-2 text-white "
+     className="flex justify-start items-center gap-2 text-white w-fit"
     >
      <Mail />
      Contact user
@@ -54,8 +81,8 @@ const UserDetail = ({ user, vacancies }) => {
      Created: {user.createdAt.toLocaleDateString()}
     </p>
    </div>
-   <div>
-    {vacancies.map((vacancy) => (
+   <div className="flex flex-col w-[70%] gap-2">
+    {vacancies.map((vacancy: IVacancy) => (
      <UsersVacancy key={vacancy.id} vacancy={vacancy} />
     ))}
    </div>

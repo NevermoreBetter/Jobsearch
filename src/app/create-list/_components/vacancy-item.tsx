@@ -12,14 +12,7 @@ import {
  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import {
- Building,
- DollarSign,
- MapPin,
- Pen,
- Sparkle,
- Trash,
-} from "lucide-react";
+import { Banknote, Building, MapPin, Pen, Sparkle, Trash } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -57,7 +50,7 @@ const VacancyItem = ({ vacancy }: VacancyItemProps) => {
      ))}
     </div>
     <p className="flex">
-     <DollarSign className="mr-1" />
+     <Banknote className="mr-1" />
      {vacancy.salary}$
     </p>
     <p className="flex">
