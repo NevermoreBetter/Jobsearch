@@ -185,7 +185,9 @@ const EditForm = ({ vacancy }: IProps) => {
             ...base,
             backgroundColor: "222.2 84% 4.9%",
             border: "1px solid hsl(200 9% 23%)",
-            outline: state.isFocused && "2px solid hsl(212.7 26.8% 83.9%)",
+            outline: state.isFocused
+             ? "2px solid hsl(212.7 26.8% 83.9%)"
+             : undefined,
            }),
            option: (base) => ({ ...base, backgroundColor: "222.2 84% 4.9%" }),
           }}

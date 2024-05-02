@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 interface ContextProps {
  params: {
   resumeTitle: string;
+  resumeId: string;
  };
 }
 

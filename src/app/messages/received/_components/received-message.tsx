@@ -1,4 +1,5 @@
 import { FileText } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 interface IMessage {
@@ -39,10 +40,12 @@ const ReceivedMessage = ({ message }: IMessage) => {
     href={`/resumes/${message.resumeLink?.position}`}
     className="flex items-center p-2 gap-2"
    >
-    <img
-     src={message.sender?.photo}
+    <Image
+     src={message.sender!.photo}
      alt="photo"
      className="rounded-full w-10 h-10 mr-2"
+     width={40}
+     height={40}
     />
     <p>{message.sender?.firstName}</p>
     <p>{message.sender?.lastName}</p>

@@ -10,7 +10,7 @@ import { Banknote, Building, MapPin, Sparkle } from "lucide-react";
 
 interface IData {
  data: {
-  title: string;
+  position: string;
   description: string;
   location: string;
   type: string[];
@@ -49,7 +49,7 @@ const ResumeDetail = ({ data }: IData) => {
     <p className="text-lg mb-5"> {data.description}</p>
     <div className="flex items-center gap-2">
      <Image
-      src={userData.photo}
+      src={userData!.photo}
       width={35}
       height={35}
       alt="user"

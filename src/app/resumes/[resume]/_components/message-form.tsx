@@ -6,12 +6,30 @@ import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 
-export const MessageForm = ({ userData }) => {
- const { id } = userData;
+interface IUserData {
+ userData:
+  | {
+     id: string;
+     externalId: string | null;
+     firstName: string | null;
+     lastName: string | null;
+     photo: string;
+     email: string;
+     createdAt: Date;
+    }
+  | null
+  | undefined;
+}
+
+export const MessageForm = ({ userData }: IUserData) => {
  const [body, setBody] = useState("");
  const [isSubmitting, setIsSubmitting] = useState(false);
+ if (!userData) {
+  return <div>Lading...</div>;
+ }
+ const { id } = userData;
 
- const handleSubmit = async (e) => {
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   setIsSubmitting(true);
 
