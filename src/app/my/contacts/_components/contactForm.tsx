@@ -38,8 +38,8 @@ interface IProps {
  user?:
   | {
      id: string;
-     firstName: string;
-     lastName: string;
+     firstName: string | null;
+     lastName: string | null;
      email: string;
      photo: string;
     }
@@ -60,9 +60,9 @@ export const ContactForm = ({ user }: IProps) => {
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
   defaultValues: {
-   firstName: !!user ? user.firstName : "",
-   lastName: !!user ? user.lastName : "",
-   email: !!user ? user.email : "",
+   firstName: (user?.firstName ?? "") || undefined,
+   lastName: (!!user ? user.lastName : "") || undefined,
+   email: (!!user ? user.email : "") || undefined,
   },
  });
 
@@ -101,7 +101,10 @@ export const ContactForm = ({ user }: IProps) => {
        <FormLabel>First Name</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input defaultValue={!!user ? user.firstName : ""} {...field} />
+         <Input
+          defaultValue={(!!user ? user.firstName : "") ?? ""}
+          {...field}
+         />
         </FormControl>
         <FormMessage />
        </div>
@@ -116,7 +119,7 @@ export const ContactForm = ({ user }: IProps) => {
        <FormLabel>Last Name</FormLabel>
        <div className="flex flex-col w-[70%] justify-between">
         <FormControl>
-         <Input defaultValue={!!user ? user.lastName : ""} {...field} />
+         <Input defaultValue={(!!user ? user.lastName : "") ?? ""} {...field} />
         </FormControl>
         <FormMessage />
        </div>

@@ -5,14 +5,13 @@ import axios from "axios";
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import Link from "next/link";
-import FilterComponent from "./filter-component";
 
 interface IResume {
  id: string;
  position: string;
  experience: number;
  location: string;
- type: string;
+ type: string[];
  createdAt: string;
  description: string;
  salary: string;
