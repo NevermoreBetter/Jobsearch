@@ -5,7 +5,11 @@ type UserState = {
  mode: "Searching" | "Hiring";
 };
 
-export const useUserStore = create<UserState>()(
+type UserActions = {
+ setMode: (newMode: "Searching" | "Hiring") => void;
+};
+
+export const useUserStore = create<UserState & UserActions>()(
  devtools(
   persist(
    (set) => ({
