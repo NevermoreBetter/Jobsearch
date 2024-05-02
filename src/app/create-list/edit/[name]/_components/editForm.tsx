@@ -53,17 +53,20 @@ const FormSchema = z.object({
 });
 
 interface IProps {
- vacancy: {
-  id: string;
-  title: string;
-  description: string;
-  createdAt: Date;
-  locations: string[];
-  type: string;
-  salary: string;
-  experience: number;
-  authorId: string;
- };
+ vacancy:
+  | {
+     id: string;
+     title: string;
+     description: string;
+     createdAt: Date;
+     locations: string[];
+     type: string;
+     salary: string;
+     experience: number;
+     authorId: string;
+    }
+  | undefined
+  | null;
 }
 
 const EditForm = ({ vacancy }: IProps) => {
@@ -71,13 +74,13 @@ const EditForm = ({ vacancy }: IProps) => {
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
   defaultValues: {
-   id: vacancy.id,
-   title: vacancy.title,
-   description: vacancy.description,
-   locations: vacancy.locations,
-   type: vacancy.type,
-   salary: vacancy.salary,
-   experience: vacancy.experience,
+   id: vacancy?.id,
+   title: vacancy?.title,
+   description: vacancy?.description,
+   locations: vacancy?.locations,
+   type: vacancy?.type,
+   salary: vacancy?.salary,
+   experience: vacancy?.experience,
   },
  });
  const { mutate } = useMutation({
@@ -95,7 +98,7 @@ const EditForm = ({ vacancy }: IProps) => {
   router.refresh();
  }
 
- const defaultValues = vacancy.locations.map((option) => ({
+ const defaultValues = vacancy?.locations.map((option) => ({
   value: option,
   label: option,
  }));

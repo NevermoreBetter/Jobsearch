@@ -11,8 +11,6 @@ const EditPage = async (props: { params: { name: string } }) => {
  if (dbUser) {
   vacancy = await db.vacancy.findFirst({ where: { id: props.params.name } });
  }
- console.log(props.params.name);
- console.log(vacancy);
 
  return (
   <div className="flex justify-center items-center mt-5">
