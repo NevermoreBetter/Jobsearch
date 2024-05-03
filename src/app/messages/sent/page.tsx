@@ -17,7 +17,9 @@ const SentPage = async () => {
      ))}
     </div>
    ) : (
-    "No Messages"
+    <div className="flex flex-col items-center justify-center h-full">
+     <h2>No messages found</h2>
+    </div>
    )}
   </div>
  );
@@ -28,7 +30,7 @@ const getSentMessagesWithUsers = async () => {
  const messagesWithUsers = await Promise.all(
   messages.map(async (message) => {
    const receiver = await fetchUser(message.recieverId);
-   const resumeLink = await getResumeById(message.senderId);
+   const resumeLink = await getResumeById(message.recieverId);
    return { ...message, receiver, resumeLink };
   })
  );

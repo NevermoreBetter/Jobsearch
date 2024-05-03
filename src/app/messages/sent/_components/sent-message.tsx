@@ -34,6 +34,7 @@ interface IMessage {
 }
 
 const SentMessage = ({ message }: IMessage) => {
+ console.log(message);
  return (
   <>
    <Link

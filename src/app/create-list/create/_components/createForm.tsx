@@ -189,6 +189,7 @@ export const CreateForm = () => {
         <FormControl>
          <Textarea
           placeholder="Write a brief description of your vacancy."
+          rows={10}
           {...field}
          />
         </FormControl>
@@ -201,21 +202,23 @@ export const CreateForm = () => {
      control={form.control}
      name="type"
      render={({ field }) => (
-      <FormItem className="">
+      <FormItem>
        <FormLabel>Employment type</FormLabel>
-       <SingleSelect onValueChange={field.onChange} defaultValue={field.value}>
-        <FormControl>
-         <SelectTrigger className="w-[70%]">
-          <SelectValue placeholder="Select type of work" />
-         </SelectTrigger>
-        </FormControl>
-        <SelectContent>
-         <SelectItem value="Remote">Remote</SelectItem>
-         <SelectItem value="On Site">On Site</SelectItem>
-         <SelectItem value="Hybrid">Hybrid</SelectItem>
-        </SelectContent>
-       </SingleSelect>
-       <FormMessage />
+       <div className="flex flex-col w-[70%] justify-between">
+        <SingleSelect onValueChange={field.onChange} defaultValue={field.value}>
+         <FormControl>
+          <SelectTrigger>
+           <SelectValue placeholder="Select type of work" />
+          </SelectTrigger>
+         </FormControl>
+         <SelectContent>
+          <SelectItem value="Remote">Remote</SelectItem>
+          <SelectItem value="On Site">On Site</SelectItem>
+          <SelectItem value="Hybrid">Hybrid</SelectItem>
+         </SelectContent>
+        </SingleSelect>
+        <FormMessage />
+       </div>
       </FormItem>
      )}
     />

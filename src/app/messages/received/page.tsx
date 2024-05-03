@@ -5,14 +5,22 @@ const ReceivedPage = async () => {
  const receivedMessages = await getReceivedMessagesWithUsers();
  return (
   <div>
-   {receivedMessages.map((message) => (
-    <div
-     key={message.id}
-     className="border rounded-xl flex flex-col p-4 gap-4 my-4"
-    >
-     <ReceivedMessage message={message} />
+   {receivedMessages.length > 1 ? (
+    <div>
+     {receivedMessages.map((message) => (
+      <div
+       key={message.id}
+       className="border rounded-xl flex flex-col p-4 gap-4 my-4"
+      >
+       <ReceivedMessage message={message} />
+      </div>
+     ))}
     </div>
-   ))}
+   ) : (
+    <div className="flex flex-col items-center justify-center h-full">
+     <h2>No messages found</h2>
+    </div>
+   )}
   </div>
  );
 };

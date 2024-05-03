@@ -1,4 +1,5 @@
 import { Banknote, Building, MapPin } from "lucide-react";
+import Link from "next/link";
 
 interface IVacancy {
  vacancy: {
@@ -43,7 +44,12 @@ const UsersVacancy = ({ vacancy }: IVacancy) => {
 
  return (
   <div className="w-full h-[250px] flex flex-col gap-3 justify-start items-start bg-gray-500 px-8 py-5 rounded-lg mb-5 animate-fade-in">
-   <p className="text-2xl font-bold text-white">{vacancy.title}</p>
+   <Link
+    href={`/jobs/${vacancy.title}`}
+    className="text-2xl font-bold text-white"
+   >
+    {vacancy.title}
+   </Link>
    <div className="flex justify-start items-center gap-4">
     <p className="flex items-center gap-2">
      <Building className="size-4" /> {vacancy.type}

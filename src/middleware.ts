@@ -5,7 +5,7 @@ export default authMiddleware({
  publicRoutes: [
   "/",
   "/jobs",
-  "about-us",
+  "/about-us",
   "/api/webhooks(.*)",
   "/api/vacancy/vacancies",
  ],

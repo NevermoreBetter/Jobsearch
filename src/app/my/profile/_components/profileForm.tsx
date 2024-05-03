@@ -44,8 +44,8 @@ const locationOptions = [
 
 const FormSchema = z.object({
  id: z.string().optional(),
- position: z.string().min(5, {
-  message: "Position must be at least 5 characters.",
+ position: z.string().min(2, {
+  message: "Position must be at least 2 characters.",
  }),
  experience: z.number(),
  salary: z.string(),
@@ -109,12 +109,8 @@ export const ProfileForm = ({ resume }: IProps) => {
 
    await axios.post("/api/resume/resumes", data);
    toast({
-    title: "You submitted the following values:",
-    description: (
-     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-      <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-     </pre>
-    ),
+    title: "Submitted successfully!",
+    description: "Your resume has been submitted.",
    });
   } catch (error) {
    console.log(error);
