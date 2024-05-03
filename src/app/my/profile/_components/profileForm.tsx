@@ -26,6 +26,8 @@ import {
  Select as SingleSelect,
 } from "@/components/ui/select";
 import Select from "react-select";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const locationOptions = [
  { value: "Kyiv", label: "Kyiv" },
@@ -48,14 +50,9 @@ const FormSchema = z.object({
  experience: z.number(),
  salary: z.string(),
  location: z.string(),
- description: z
-  .string()
-  .min(10, {
-   message: "Description must be at least 10 characters.",
-  })
-  .max(250, {
-   message: "Description must be at most 250 characters.",
-  }),
+ description: z.string().min(10, {
+  message: "Description must be at least 10 characters.",
+ }),
  type: z.string().array(),
 });
 
@@ -75,12 +72,18 @@ interface IProps {
 }
 
 export const ProfileForm = ({ resume }: IProps) => {
- const { mutate } = useMutation({
+ const route = useRouter();
+ const [isSubmitting, setIsSubmitting] = useState(false);
+ const { mutate, isPending } = useMutation({
   mutationFn: async (editedPost: z.infer<typeof FormSchema>) => {
    return axios.patch(`/api/resume/${resume!.id}`, editedPost);
   },
   onSuccess: () => {
-   alert("success");
+   toast({
+    title: "Edited successfully!",
+    description: "Your resume has been updated.",
+   });
+   route.refresh();
   },
  });
 
@@ -102,6 +105,8 @@ export const ProfileForm = ({ resume }: IProps) => {
 
  async function onSubmit(data: z.infer<typeof FormSchema>) {
   try {
+   setIsSubmitting(true);
+
    await axios.post("/api/resume/resumes", data);
    toast({
     title: "You submitted the following values:",
@@ -113,6 +118,8 @@ export const ProfileForm = ({ resume }: IProps) => {
    });
   } catch (error) {
    console.log(error);
+  } finally {
+   setIsSubmitting(false);
   }
  }
 
@@ -233,6 +240,7 @@ export const ProfileForm = ({ resume }: IProps) => {
         <FormControl>
          <Textarea
           defaultValue={!!resume ? resume.description : ""}
+          rows={5}
           placeholder="Write a brief description of yourself."
           {...field}
          />
@@ -281,7 +289,15 @@ export const ProfileForm = ({ resume }: IProps) => {
       </FormItem>
      )}
     />
-    {!!resume ? <Button>Edit</Button> : <Button type="submit">Submit</Button>}
+    {!!resume ? (
+     <Button disabled={isPending ? true : false}>
+      {isPending ? "Editing..." : "Edit"}
+     </Button>
+    ) : (
+     <Button type="submit" disabled={isSubmitting ? true : false}>
+      {isSubmitting ? "Submitting..." : "Submit"}
+     </Button>
+    )}
    </form>
   </Form>
  );

@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const FormSchema = z.object({
  id: z.string().optional(),
@@ -48,12 +49,17 @@ interface IProps {
 }
 
 export const ContactForm = ({ user }: IProps) => {
- const { mutate } = useMutation({
+ const route = useRouter();
+ const { mutate, isPending } = useMutation({
   mutationFn: async (editedUser: z.infer<typeof FormSchema>) => {
    return axios.patch(`/api/user/${user!.id}`, editedUser);
   },
   onSuccess: () => {
-   alert("success");
+   toast({
+    title: "Edited successfully!",
+    description: "Your resume has been updated.",
+   });
+   route.refresh();
   },
  });
 
@@ -67,7 +73,6 @@ export const ContactForm = ({ user }: IProps) => {
  });
 
  async function onEdit(data: z.infer<typeof FormSchema>) {
-  console.log(data);
   mutate(data);
  }
 
@@ -141,7 +146,9 @@ export const ContactForm = ({ user }: IProps) => {
       </FormItem>
      )}
     />
-    <Button>Edit</Button>
+    <Button disabled={isPending ? true : false}>
+     {isPending ? "Editing..." : "Edit"}
+    </Button>
    </form>
   </Form>
  );

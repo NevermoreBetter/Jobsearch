@@ -26,6 +26,7 @@ import {
  SelectValue,
  Select as SingleSelect,
 } from "@/components/ui/select";
+import { useState } from "react";
 
 const locationOptions = [
  { value: "Kyiv", label: "Kyiv" },
@@ -53,19 +54,8 @@ const FormSchema = z.object({
  experience: z.number(),
 });
 
-interface IProps {
- resume: {
-  id: string;
-  position: string;
-  experience: number;
-  salary: string;
-  location: string[];
-  description: string;
-  type: string;
- } | null;
-}
-
 export const CreateForm = () => {
+ const [isSubmitting, setIsSubmitting] = useState(false);
  const router = useRouter();
  const form = useForm<z.infer<typeof FormSchema>>({
   resolver: zodResolver(FormSchema),
@@ -76,19 +66,19 @@ export const CreateForm = () => {
 
  async function onSubmit(data: z.infer<typeof FormSchema>) {
   try {
+   setIsSubmitting(true);
    await axios.post("/api/vacancy/vacancies", data);
    toast({
-    title: "You submitted the following values:",
-    description: (
-     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-      <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-     </pre>
-    ),
+    title: "Submitted successfully!",
+    description: "Your vacancy has been submitted.",
+    duration: 3000,
    });
    router.push("/create-list");
    router.refresh();
   } catch (error) {
    console.log(error);
+  } finally {
+   setIsSubmitting(false);
   }
  }
 
@@ -229,7 +219,9 @@ export const CreateForm = () => {
       </FormItem>
      )}
     />
-    <Button type="submit">Submit</Button>
+    <Button disabled={isSubmitting ? true : false} type="submit">
+     {isSubmitting ? "Submitting..." : "Submit"}
+    </Button>
    </form>
   </Form>
  );

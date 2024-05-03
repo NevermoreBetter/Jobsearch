@@ -36,9 +36,9 @@ const VacancyItem = ({ vacancy }: VacancyItemProps) => {
  };
  return (
   <div className="w-full flex flex-col justify-center items-center bg-gray-500 px-8 py-5 rounded-lg mb-5">
-   <Link href={`/create-list/${vacancy.title}`} className="w-[80%]">
+   <div className="w-[80%]">
     <h2 className="text-2xl font-bold mb-2 text-center">{vacancy.title}</h2>
-   </Link>
+   </div>
    <div className="flex justify-between mb-2 w-[90%]">
     <div className="w-1/4  flex flex-wrap overflow-hidden line-clamp-2">
      <MapPin className="mr-1" />

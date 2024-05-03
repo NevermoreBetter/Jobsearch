@@ -84,12 +84,16 @@ const EditForm = ({ vacancy }: IProps) => {
    experience: vacancy?.experience,
   },
  });
- const { mutate } = useMutation({
+ const { mutate, isPending } = useMutation({
   mutationFn: async (editedVacancy: z.infer<typeof FormSchema>) => {
    return axios.patch(`/api/vacancy/${vacancy!.id}`, editedVacancy);
   },
   onSuccess: () => {
-   toast.success("Vacancy edited successfully");
+   toast({
+    title: "Edited successfully!",
+    description: "Your vacancy has been updated.",
+    duration: 3000,
+   });
    router.push("/create-list");
    router.refresh();
   },
@@ -249,7 +253,9 @@ const EditForm = ({ vacancy }: IProps) => {
       </FormItem>
      )}
     />
-    <Button type="submit">Edit</Button>
+    <Button type="submit" disabled={isPending ? true : false}>
+     {isPending ? "Editing..." : "Edit"}
+    </Button>
    </form>
   </Form>
  );
